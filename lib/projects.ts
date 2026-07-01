@@ -164,7 +164,7 @@ export const projects = [
     stack: ["HTML", "CSS", "JavaScript", "Vanilla"],
     links: {
       github: "https://github.com/jakubdyrszka-pixel/Powerlifting-calculator-with-comparison",
-      demo: "https://powerlifting-calculator-zeta.vercel.app",
+      demo: "https://calc.jakubdyrszka.dev",
     },
     pl: {
       summary:
@@ -230,6 +230,7 @@ export const projects = [
     metrics: ["i18n", "SEO", "Case studies", "Design system"],
     stack: ["Next.js", "Tailwind", "Framer Motion", "TypeScript"],
     links: {
+      github: "https://github.com/jakubdyrszka-pixel/Portfolio",
       demo: "https://jakubdyrszka.dev",
     },
     pl: {
