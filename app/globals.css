@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 98% 0.004 92;
+  --ink: 18% 0.012 260;
+  --muted: 48% 0.01 260;
+  --surface: 95% 0.006 92;
+  --border: 86% 0.008 92;
+  --inverse: 16% 0.016 260;
+  --inverse-ink: 97% 0.005 92;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 12% 0%, oklch(92% 0.018 92 / 0.45), transparent 28rem),
+    linear-gradient(180deg, oklch(var(--background)), oklch(96% 0.006 92));
+  background-attachment: fixed;
+  color: oklch(var(--ink));
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.micro-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: oklch(var(--muted));
+}
+
+/* Smooth section entry */
+section {
+  scroll-margin-top: 4rem;
+}
