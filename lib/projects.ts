@@ -164,7 +164,7 @@ export const projects = [
     stack: ["HTML", "CSS", "JavaScript", "Vanilla"],
     links: {
       github: "https://github.com/jakubdyrszka-pixel/Powerlifting-calculator-with-comparison",
-      demo: "https://calc.jakubdyrszka.dev",
+      demo: "https://powerlifting-calculator-zeta.vercel.app",
     },
     pl: {
       summary:
