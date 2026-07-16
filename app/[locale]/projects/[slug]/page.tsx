@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ProjectVisual } from "@/components/ui/project-visual";
@@ -49,6 +49,10 @@ export default async function ProjectCaseStudyPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale: rawLocale, slug } = await params;
+  if (slug === "physionotes") {
+    redirect("/physionotes");
+  }
+
   const locale: Locale = isLocale(rawLocale) ? rawLocale : "en";
   const project = getProject(slug);
 

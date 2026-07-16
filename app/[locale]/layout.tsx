@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
+import { CookieBanner } from "@/components/cookie-banner";
 import { isLocale, type Locale } from "@/lib/i18n";
 
 export function generateStaticParams() {
@@ -24,7 +25,8 @@ export default async function LocaleLayout({
     <>
       <Navbar locale={locale as Locale} />
       <main>{children}</main>
-      <Footer />
+      <Footer locale={locale as Locale} />
+      <CookieBanner locale={locale as Locale} />
     </>
   );
 }

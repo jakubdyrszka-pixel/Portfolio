@@ -18,6 +18,17 @@ export const dictionary = {
       about: "O mnie",
       contact: "Kontakt",
     },
+    legal: {
+      privacy: "Polityka Prywatności",
+      terms: "Regulamin i EULA",
+      cookies: "Ustawienia Cookies",
+    },
+    cookiesBanner: {
+      title: "Prywatność i pliki cookies",
+      body: "Ta strona wykorzystuje wyłącznie niezbędne mechanizmy pamięci lokalnej do prawidłowego działania serwisu oraz weryfikacji preferencji i sesji. Nie śledzimy Twojej aktywności do celów reklamowych ani nie przekazujemy danych podmiotom trzecim.",
+      accept: "Rozumiem i akceptuję",
+      settings: "Polityka prywatności",
+    },
     actions: {
       viewProjects: "Zobacz projekty",
       contactMe: "Kontakt",
@@ -90,6 +101,17 @@ export const dictionary = {
       projects: "Projects",
       about: "About",
       contact: "Contact",
+    },
+    legal: {
+      privacy: "Privacy Policy",
+      terms: "Terms & EULA",
+      cookies: "Cookie Settings",
+    },
+    cookiesBanner: {
+      title: "Privacy & Cookies",
+      body: "This website uses only essential local storage mechanisms required for proper operation, preferences, and session verification. We do not track your activity for advertising purposes nor sell your data to third parties.",
+      accept: "Got it & Accept",
+      settings: "Privacy Policy",
     },
     actions: {
       viewProjects: "View Projects",

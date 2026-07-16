@@ -1,0 +1,130 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum LicenseTier {
+  TRIAL
+  STANDARD
+  PROFESSIONAL
+  ENTERPRISE
+}
+
+enum LicenseStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+  SUSPENDED
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  passwordHash  String
+  name          String?
+  role          Role           @default(USER)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  licenses      License[]
+  devices       Device[]
+  sessions      Session[]
+  refreshTokens RefreshToken[]
+  auditLogs     AuditLog[]
+
+  @@index([email])
+}
+
+model License {
+  id               String        @id @default(uuid())
+  userId           String
+  tier             LicenseTier   @default(TRIAL)
+  status           LicenseStatus @default(ACTIVE)
+  expiresAt        DateTime
+  gracePeriodDays  Int           @default(30)
+  maxDevices       Int           @default(3)
+  features         String[]      // e.g., ["unlimited_patients", "cloud_backup", "export_pdf"]
+  stripeCustomerId String?       @unique
+  stripeSubId      String?       @unique
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  devices          Device[]
+
+  @@index([userId, status])
+}
+
+model Device {
+  id             String    @id @default(uuid())
+  userId         String
+  licenseId      String?
+  deviceId       String    @unique // Unique hardware fingerprint / UUID generated on first boot
+  deviceName     String    // e.g., "MacBook Pro (M3)"
+  os             String    // e.g., "macOS 14.5"
+  appVersion     String    // e.g., "1.0.0"
+  lastActiveAt   DateTime  @default(now())
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  license        License?  @relation(fields: [licenseId], references: [id], onDelete: SetNull)
+  refreshTokens  RefreshToken[]
+
+  @@index([userId, isActive])
+  @@index([deviceId])
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  token        String   @unique // Web session token or temporary app session identifier
+  expiresAt    DateTime
+  ipAddress    String?
+  userAgent    String?
+  createdAt    DateTime @default(now())
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+}
+
+model RefreshToken {
+  id           String   @id @default(uuid())
+  tokenHash    String   @unique // SHA-256 hash of the actual refresh token sent to client
+  userId       String
+  deviceId     String?
+  expiresAt    DateTime
+  isRevoked    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  device       Device?  @relation(fields: [deviceId], references: [deviceId], onDelete: SetNull)
+
+  @@index([userId, isRevoked])
+  @@index([tokenHash])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  action    String   // e.g., "LOGIN", "LICENSE_VERIFIED", "DEVICE_REGISTERED", "ACCOUNT_DELETED", "DATA_EXPORTED"
+  details   String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId, createdAt])
+  @@index([createdAt])
+}

@@ -1,3 +1,4 @@
+import {ClerkProvider} from "@clerk/nextjs";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -27,7 +28,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="font-sans text-ink bg-background antialiased selection:bg-black/10 selection:text-ink">
-        {children}
+        <ClerkProvider>
+          {children}
+        </ClerkProvider>
       </body>
     </html>
   );
