@@ -23,7 +23,7 @@ Instead of a generic template or simple list of links, this portfolio is enginee
 
 ## 🚀 Featured Projects / Wybrane Projekty
 
-### 1. 🏥 [PhysioNotes](https://github.com/jakubdyrszka-pixel/PhysioNotes) — Offline-First Medical Documentation App
+### 1. 🏥 [PhysioNotes](/physionotes) — Offline-First Medical Documentation App
 A professional desktop application designed for physical therapists to conduct patient interviews and generate clinical documentation without cloud dependency or latency.
 * **Stack**: React, Electron, TypeScript, Node.js, Tailwind CSS, Local DB
 * **Key Features**:

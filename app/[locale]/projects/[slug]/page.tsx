@@ -10,10 +10,12 @@ import { getProject, projects } from "@/lib/projects";
 
 export function generateStaticParams() {
   return ["pl", "en"].flatMap((locale) =>
-    projects.map((project) => ({
-      locale,
-      slug: project.slug,
-    })),
+    projects
+      .filter((project) => project.slug !== "physionotes")
+      .map((project) => ({
+        locale,
+        slug: project.slug,
+      })),
   );
 }
 
@@ -23,6 +25,9 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale: rawLocale, slug } = await params;
+  if (slug === "physionotes") {
+    return {};
+  }
   const locale: Locale = isLocale(rawLocale) ? rawLocale : "en";
   const project = getProject(slug);
 

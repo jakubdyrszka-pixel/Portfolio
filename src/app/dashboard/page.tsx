@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useClerk } from '@clerk/nextjs';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Activity,
@@ -49,6 +50,7 @@ interface UserProfile {
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { signOut } = useClerk();
   const [user, setUser] = useState<UserProfile | null>(null);
   const [license, setLicense] = useState<License | null>(null);
   const [devices, setDevices] = useState<Device[]>([]);
@@ -151,7 +153,18 @@ export default function DashboardPage() {
       }).catch(() => {});
     }
     localStorage.clear();
-    router.push('/login');
+    sessionStorage.clear();
+    try {
+      await signOut(() => {
+        window.location.href = '/login';
+      });
+    } catch {
+      // Ignore
+    } finally {
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 150);
+    }
   };
 
   if (loading) {

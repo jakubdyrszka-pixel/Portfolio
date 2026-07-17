@@ -1,32 +1,48 @@
 "use client";
 
-import React, { useState } from "react";
-import { useUser, useClerk } from "@clerk/nextjs";
+import React, { useState, useEffect } from "react";
+import { useUser, useClerk, UserButton } from "@clerk/nextjs";
 import { 
   CheckCircle2, 
-  Copy, 
   ExternalLink, 
   KeyRound, 
   Laptop, 
-  ShieldCheck, 
-  Sparkles, 
   Download, 
-  HelpCircle,
   Terminal,
-  Database
+  LogOut,
+  ShieldCheck,
+  Sparkles,
+  Copy,
+  Check
 } from "lucide-react";
 
 export function PhysioNotesLandingClient() {
   const { isLoaded, isSignedIn, user } = useUser();
-  const { openSignIn, openSignUp } = useClerk();
+  const { openSignIn, openSignUp, signOut } = useClerk();
   const [copied, setCopied] = useState(false);
-  const [showSetupGuide, setShowSetupGuide] = useState(false);
+  const [showManualCode, setShowManualCode] = useState(false);
   const [activating, setActivating] = useState(false);
   const [activationStatus, setActivationStatus] = useState<string | null>(null);
 
-  // Generate a mock or real-feeling license token string based on Clerk user ID / email
+  const handleSignOut = async () => {
+    try {
+      localStorage.clear();
+      sessionStorage.clear();
+      await signOut(() => {
+        window.location.href = "/physionotes";
+      });
+    } catch {
+      // Ignore errors if offline/timeout
+    } finally {
+      setTimeout(() => {
+        window.location.href = "/physionotes";
+      }, 150);
+    }
+  };
+
+  const encodeBase64 = (str: string) => typeof btoa !== "undefined" ? btoa(str) : Buffer.from(str).toString("base64");
   const licenseToken = user 
-    ? `PN-V2-${user.id.slice(-8).toUpperCase()}-${Buffer.from(user.primaryEmailAddress?.emailAddress || "physio").toString("base64").slice(0, 12).toUpperCase()}`
+    ? `PN-V2-${user.id.slice(-8).toUpperCase()}-${encodeBase64(user.primaryEmailAddress?.emailAddress || "physio").slice(0, 12).toUpperCase()}`
     : "PN-V2-DEMO-LICENSE-KEY-1234";
 
   const handleCopyLicense = () => {
@@ -38,7 +54,7 @@ export function PhysioNotesLandingClient() {
   const triggerActivation = async (isManualClick = false) => {
     if (!user) return;
     if (isManualClick) setActivating(true);
-    setActivationStatus("Przełączanie i aktywacja w aplikacji PhysioNotes...");
+    setActivationStatus("Synchronizacja z aplikacją desktopową PhysioNotes...");
     
     const payload = {
       userId: user.id,
@@ -49,7 +65,6 @@ export function PhysioNotesLandingClient() {
     };
 
     try {
-      // Direct local loopback activation (instant, zero splash screen issues during dev)
       const res = await fetch("http://127.0.0.1:43210/activate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -60,286 +75,223 @@ export function PhysioNotesLandingClient() {
         if (isManualClick) setActivating(false);
         return;
       }
-    } catch (e) {
-      // Loopback server not reachable or offline
+    } catch {
+      // Loopback server offline or app not running yet
     }
 
     if (isManualClick) {
-      // Fallback deep link
       window.location.href = `physionotes://activate?token=${encodeURIComponent(licenseToken)}&email=${encodeURIComponent(user.primaryEmailAddress?.emailAddress || "")}&userId=${encodeURIComponent(user.id)}`;
       setActivationStatus("✅ Wysłano sygnał aktywacji do PhysioNotes.");
       setActivating(false);
     }
   };
 
-  // Auto-activate immediately right after login!
-  React.useEffect(() => {
+  useEffect(() => {
     if (isSignedIn && user && isLoaded) {
       triggerActivation(false);
     }
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [isSignedIn, user, isLoaded]);
 
   return (
-    <div className="space-y-8">
-      {/* Top Hero Card / Auth Orchestrator */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 border-2 border-ink bg-neutral-900 text-inverse-ink p-6 sm:p-10 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden">
+    <div id="download" className="scroll-mt-24 text-left">
+      {/* Large Linear/Arc style dark container */}
+      <div className="border border-neutral-800 rounded-3xl p-6 sm:p-10 lg:p-14 bg-gradient-to-b from-neutral-900 via-[#111111] to-neutral-950 text-white shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] relative overflow-hidden">
         
-        {/* Decorative Grid Background pattern */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+        {/* Subtle glow effect inside card */}
+        <div className="absolute -top-32 -right-32 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Left Column: Product Value Prop & Status */}
-        <div className="lg:col-span-7 space-y-6 relative z-10 flex flex-col justify-between">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500 text-ink text-xs font-extrabold uppercase tracking-widest border border-ink shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] mb-4">
-              <Sparkles className="h-3.5 w-3.5" />
-              <span>PhysioNotes V2.0 Desktop</span>
-            </div>
-            
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
-              Suwerenna Dokumentacja Medyczna dla Fizjoterapeuty.
-            </h1>
-            
-            <p className="mt-4 text-sm sm:text-base text-neutral-300 leading-relaxed font-medium max-w-xl">
-              Pracuj 100% lokalnie z szyfrowaniem <strong className="text-emerald-400">AES-256 (Zero-Knowledge)</strong> w bazie SQLite na Twoim dysku. Portal służy wyłącznie do weryfikacji licencji i uprawnień – żadna notatka z wizyty nie trafia do chmury.
-            </p>
-          </div>
-
-          {/* Quick value prop bullets */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-4 border-t border-neutral-800">
-            <div className="flex items-center gap-2 text-neutral-200">
-              <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0" />
-              <span>Pełna zgodność RODO / brak powierzenia</span>
-            </div>
-            <div className="flex items-center gap-2 text-neutral-200">
-              <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-              <span>Wyłączenie MDR (MDCG 2019-11)</span>
-            </div>
-            <div className="flex items-center gap-2 text-neutral-200">
-              <Laptop className="h-4 w-4 text-emerald-400 shrink-0" />
-              <span>30 dni pracy offline (Grace Period)</span>
-            </div>
-            <div className="flex items-center gap-2 text-neutral-200">
-              <Database className="h-4 w-4 text-emerald-400 shrink-0" />
-              <span>Zarządzanie licencjami z tego portalu</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Column: Interactive Login & License Gate */}
-        <div className="lg:col-span-5 relative z-10 flex flex-col justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center relative z-10">
           
-          {!isLoaded ? (
-            <div className="p-8 border-2 border-ink bg-neutral-800 text-center animate-pulse shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-              <div className="h-6 bg-neutral-700 w-3/4 mx-auto mb-4" />
-              <div className="h-10 bg-neutral-700 w-full mb-3" />
-              <div className="h-10 bg-neutral-700 w-full" />
+          {/* Left Column: Direct Native Downloads */}
+          <div className="lg:col-span-6 space-y-8">
+            <div>
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-medium mb-4">
+                <Sparkles className="h-3.5 w-3.5" />
+                <span>Architektura Natywna • Praca Offline-First</span>
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
+                Wybierz instalator dla swojego systemu
+              </h3>
+              <p className="mt-3 text-base text-neutral-300 font-normal leading-relaxed">
+                Zainstaluj aplikację bezpośrednio na stacji roboczej gabinetu. Lekki instalator (~150 MB) zawiera pełne środowisko wykonawcze wraz z lokalnym silnikiem bazy danych SQLite.
+              </p>
             </div>
-          ) : !isSignedIn ? (
-            <div className="p-6 sm:p-8 border-2 border-ink bg-white text-ink shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] space-y-6">
-              <div>
-                <span className="inline-block px-2.5 py-0.5 bg-ink text-inverse-ink text-[10px] font-extrabold uppercase tracking-wider mb-2">
-                  Krok 1 • Weryfikacja
-                </span>
-                <h3 className="text-xl font-black uppercase tracking-tight text-ink">
-                  Połącz z aplikacją PhysioNotes
-                </h3>
-                <p className="text-xs text-muted mt-1 font-medium leading-relaxed">
-                  Zaloguj się lub utwórz konto profesjonalne, aby aktywować licencję w swojej aplikacji desktopowej.
-                </p>
-              </div>
 
-              <div className="space-y-3 pt-2">
-                <button
-                  onClick={() => openSignIn({ forceRedirectUrl: "/physionotes" })}
-                  className="w-full py-3.5 px-4 bg-emerald-500 hover:bg-emerald-400 text-ink font-extrabold text-xs uppercase tracking-wider border-2 border-ink shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition flex items-center justify-center gap-2"
-                >
-                  <KeyRound className="h-4 w-4" />
-                  <span>Zaloguj się na Konto (Clerk)</span>
-                </button>
-
-                <button
-                  onClick={() => openSignUp({ forceRedirectUrl: "/physionotes" })}
-                  className="w-full py-3.5 px-4 bg-neutral-100 hover:bg-neutral-200 text-ink font-extrabold text-xs uppercase tracking-wider border-2 border-ink shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition flex items-center justify-center gap-2"
-                >
-                  <span>Zarejestruj Nowy Gabinet</span>
-                </button>
-              </div>
-
-              <div className="pt-4 border-t border-ink/10 flex items-center justify-between text-[11px] text-muted font-bold">
-                <span>Bezpieczeństwo sesji:</span>
-                <span className="text-emerald-700 font-extrabold">Aktywne (SSL/JWT)</span>
-              </div>
-            </div>
-          ) : (
-            <div className="p-6 sm:p-8 border-2 border-ink bg-white text-ink shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] space-y-5">
-              
-              <div className="flex items-center justify-between pb-4 border-b border-ink/10">
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-1.5 text-emerald-600 font-extrabold text-xs uppercase tracking-wider">
-                    <CheckCircle2 className="h-4 w-4" />
-                    <span>Aktywne połączenie</span>
+            {/* Download Buttons */}
+            <div className="space-y-4">
+              <a
+                href="https://github.com/jakubdyrszka-pixel/PhysioNotes/releases/latest/download/PhysioNotes-macOS-universal.dmg"
+                className="w-full flex items-center justify-between px-6 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-[#111111] font-medium transition-all duration-200 hover:scale-[1.01] shadow-[0_4px_25px_rgba(16,185,129,0.25)]"
+              >
+                <div className="flex items-center gap-3.5">
+                  <Laptop className="h-6 w-6 text-[#111111]" />
+                  <div className="text-left">
+                    <span className="block text-sm font-semibold text-[#111111]">Pobierz instalator macOS (.dmg)</span>
+                    <span className="text-xs text-[#111111]/80 font-normal">Apple Silicon (M1–M4) &amp; Intel</span>
                   </div>
-                  <h4 className="text-sm font-black truncate max-w-[200px]">
-                    {user?.primaryEmailAddress?.emailAddress}
-                  </h4>
                 </div>
-                {user?.imageUrl ? (
-                  <div className="w-9 h-9 rounded-full border border-ink overflow-hidden relative shrink-0">
-                    <img 
-                      src={user.imageUrl} 
-                      alt="User avatar" 
-                      className="w-full h-full object-cover" 
-                    />
-                  </div>
-                ) : (
-                  <div className="w-9 h-9 rounded-full border border-ink bg-ink text-inverse-ink flex items-center justify-center font-bold text-xs shrink-0">
-                    {user?.firstName?.slice(0, 1) || "P"}
-                  </div>
-                )}
-              </div>
+                <Download className="h-5 w-5 text-[#111111]" />
+              </a>
 
-              {activationStatus && (
-                <div className="p-3 bg-emerald-50 border border-emerald-500 text-emerald-900 text-xs font-bold rounded-none">
-                  {activationStatus}
+              <a
+                href="https://github.com/jakubdyrszka-pixel/PhysioNotes/releases/latest/download/PhysioNotes-Setup-x64.exe"
+                className="w-full flex items-center justify-between px-6 py-4 rounded-2xl border border-neutral-700 hover:border-neutral-500 bg-neutral-800/80 hover:bg-neutral-800 text-white font-medium transition-all duration-200 hover:scale-[1.01]"
+              >
+                <div className="flex items-center gap-3.5">
+                  <Terminal className="h-6 w-6 text-emerald-400" />
+                  <div className="text-left">
+                    <span className="block text-sm font-semibold text-white">Pobierz instalator Windows (.exe)</span>
+                    <span className="text-xs text-neutral-400 font-normal">Windows 10 / 11 (Instalator 64-bit)</span>
+                  </div>
+                </div>
+                <Download className="h-5 w-5 text-neutral-400" />
+              </a>
+            </div>
+
+            {/* Trust highlights */}
+            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-neutral-800 text-xs text-neutral-400">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0" />
+                <span>Szyfrowanie AES-256-GCM</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                <span>Zgodne jako ADO RODO</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Interactive Clerk License Activation Gate */}
+          <div className="lg:col-span-6">
+            <div className="border border-neutral-800 rounded-2xl p-6 sm:p-8 bg-neutral-900/90 backdrop-blur-xl shadow-lg space-y-6">
+              
+              {!isLoaded ? (
+                <div className="space-y-4 py-8 animate-pulse text-center">
+                  <div className="h-6 bg-neutral-800 rounded-lg w-3/4 mx-auto" />
+                  <div className="h-12 bg-neutral-800 rounded-xl w-full" />
+                  <div className="h-12 bg-neutral-800 rounded-xl w-full" />
+                </div>
+              ) : !isSignedIn ? (
+                <div className="space-y-6">
+                  <div>
+                    <span className="text-xs font-medium text-emerald-400 uppercase tracking-wider block mb-1">
+                      Portal Licencyjny Gabinetu
+                    </span>
+                    <h4 className="text-xl font-semibold tracking-tight text-white">
+                      Aktywuj licencję stacji roboczej
+                    </h4>
+                    <p className="text-sm text-neutral-400 mt-2 font-normal leading-relaxed">
+                      Zaloguj się na zweryfikowane konto profesjonalne, aby wygenerować kryptograficzny token licencyjny i automatycznie powiązać aplikację desktopową.
+                    </p>
+                  </div>
+
+                  <div className="space-y-3 pt-2">
+                    <button
+                      onClick={() => openSignIn({ forceRedirectUrl: "/physionotes" })}
+                      className="w-full py-4 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#111111] font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2.5 shadow-sm"
+                    >
+                      <KeyRound className="h-4.5 w-4.5" />
+                      <span>Zaloguj się na konto praktyki medycznej</span>
+                    </button>
+
+                    <button
+                      onClick={() => openSignUp({ forceRedirectUrl: "/physionotes" })}
+                      className="w-full py-4 px-5 rounded-xl border border-neutral-700 hover:border-neutral-600 bg-neutral-800 hover:bg-neutral-800/80 text-white font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2.5"
+                    >
+                      <span>Zarejestruj nową praktykę medyczną</span>
+                    </button>
+                  </div>
+
+                  <div className="pt-4 border-t border-neutral-800/80 flex items-center justify-between text-xs text-neutral-400">
+                    <span>Szyfrowanie połączenia:</span>
+                    <span className="text-emerald-400 font-medium">SSL / Szyfrowanie JWT</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-neutral-800 gap-3">
+                    <div className="space-y-0.5 min-w-0">
+                      <div className="flex items-center gap-1.5 text-emerald-400 font-medium text-xs uppercase tracking-wider">
+                        <CheckCircle2 className="h-4 w-4 shrink-0" />
+                        <span>Aktywna sesja terapeutyczna</span>
+                      </div>
+                      <h4 className="text-base font-semibold text-white truncate">
+                        {user?.primaryEmailAddress?.emailAddress}
+                      </h4>
+                    </div>
+                    <div className="flex items-center gap-3 shrink-0">
+                      <button
+                        type="button"
+                        onClick={handleSignOut}
+                        className="px-3 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 text-xs font-medium transition flex items-center gap-1.5"
+                        title="Wyloguj i przełącz konto"
+                      >
+                        <LogOut className="h-3.5 w-3.5" />
+                        <span>Wyloguj</span>
+                      </button>
+                      <div className="rounded-full overflow-hidden border border-neutral-700 flex items-center justify-center">
+                        <UserButton />
+                      </div>
+                    </div>
+                  </div>
+
+                  {activationStatus && (
+                    <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-medium leading-relaxed">
+                      {activationStatus}
+                    </div>
+                  )}
+
+                  <div className="space-y-3">
+                    <button
+                      onClick={() => triggerActivation(true)}
+                      disabled={activating}
+                      className="w-full py-4 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#111111] font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2.5 shadow-sm disabled:opacity-50"
+                    >
+                      <ExternalLink className="h-4.5 w-4.5" />
+                      <span>Synchronizuj z aplikacją PhysioNotes</span>
+                    </button>
+
+                    <p className="text-xs text-neutral-400 text-center leading-relaxed font-normal">
+                      Szyfrowana synchronizacja odbywa się automatycznie z otwartą aplikacją desktopową poprzez bezpieczny interfejs lokalny (Loopback).
+                    </p>
+                  </div>
+
+                  {/* Manual Code Option */}
+                  <div className="pt-4 border-t border-neutral-800">
+                    <button
+                      onClick={() => setShowManualCode(!showManualCode)}
+                      className="w-full text-xs text-neutral-400 hover:text-white font-medium underline transition text-center"
+                    >
+                      {showManualCode ? "Ukryj ręczny kod licencji" : "Wprowadzenie ręczne? Wyświetl klucz licencyjny"}
+                    </button>
+
+                    {showManualCode && (
+                      <div className="mt-3 p-3 rounded-xl bg-neutral-950 border border-neutral-800 space-y-2 text-xs">
+                        <span className="text-neutral-500 block">Kryptograficzny token licencyjny (AES):</span>
+                        <div className="flex items-center gap-2">
+                          <code className="flex-1 p-2 rounded-lg bg-neutral-900 border border-neutral-800 font-mono text-emerald-400 text-xs truncate">
+                            {licenseToken}
+                          </code>
+                          <button
+                            onClick={handleCopyLicense}
+                            className="p-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-white transition flex items-center gap-1.5 shrink-0"
+                          >
+                            {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+                            <span>{copied ? "Skopiowano" : "Kopiuj"}</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
                 </div>
               )}
 
-              <div className="space-y-3 pt-1">
-                <button
-                  onClick={() => triggerActivation(true)}
-                  disabled={activating}
-                  className="w-full py-4 px-4 bg-emerald-500 text-ink font-extrabold text-xs uppercase tracking-wider border-2 border-ink shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-emerald-400 transition flex items-center justify-center gap-2 disabled:opacity-50"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  <span>🚀 Otwórz &amp; Aktywuj Aplikację PhysioNotes</span>
-                </button>
-
-                <p className="text-[11px] text-slate-600 leading-relaxed text-center font-medium">
-                  Twoje konto automatycznie synchronizuje się z otwartą aplikacją desktopową w tle bez wpisywania jakichkolwiek kodów.
-                </p>
-              </div>
-
-              {/* Collapsible manual code backup just in case */}
-              <div className="pt-3 border-t border-ink/10">
-                <button 
-                  onClick={() => setShowSetupGuide(!showSetupGuide)}
-                  className="w-full py-1 text-[11px] text-slate-500 hover:text-slate-900 font-bold underline transition text-center"
-                >
-                  {showSetupGuide ? "Ukryj opcje ręcznej aktywacji" : "Masz problem z połączeniem? Pokaż kod ręczny"}
-                </button>
-                {showSetupGuide && (
-                  <div className="mt-3 p-2.5 bg-neutral-100 border border-ink space-y-1.5 text-xs">
-                    <span className="text-[10px] font-bold text-slate-600 block">Ręczny kod licencyjny:</span>
-                    <div className="flex items-center gap-1.5">
-                      <code className="flex-1 p-1.5 bg-white border border-ink text-[11px] font-mono font-bold truncate">
-                        {licenseToken}
-                      </code>
-                      <button
-                        onClick={handleCopyLicense}
-                        className="p-1.5 bg-ink text-white font-bold text-[11px] shrink-0"
-                      >
-                        {copied ? "OK!" : "Kopiuj"}
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-            </div>
-          )}
-
-        </div>
-
-      </div>
-
-      {/* Expandable Setup & Download Guide */}
-      {(showSetupGuide || true) && (
-        <div className="border-2 border-ink bg-neutral-50 dark:bg-neutral-900/40 p-6 sm:p-8 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-ink/20">
-            <div>
-              <span className="text-[11px] font-extrabold uppercase tracking-widest text-emerald-600 block mb-1">
-                Krok Po Kroku • Szybki Start
-              </span>
-              <h3 className="text-xl sm:text-2xl font-extrabold text-ink tracking-tight">
-                Pobieranie i Jednorazowa Aktywacja Licencji
-              </h3>
-            </div>
-            
-            <div className="flex flex-wrap items-center gap-3">
-              <a
-                href="#download-section"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-ink text-inverse-ink text-xs font-extrabold uppercase tracking-wider border border-ink shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:bg-emerald-600 hover:text-white transition"
-              >
-                <Download className="h-3.5 w-3.5" />
-                <span>Pobierz macOS / Windows</span>
-              </a>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
-            <div className="space-y-2 border border-ink/30 p-4 bg-background">
-              <div className="flex items-center gap-2 text-ink font-extrabold text-sm">
-                <span className="w-6 h-6 bg-ink text-inverse-ink text-xs font-bold flex items-center justify-center">1</span>
-                <span>Zainstaluj Aplikację</span>
-              </div>
-              <p className="text-xs text-muted leading-relaxed font-medium">
-                Pobierz instalator dla swojego systemu (macOS .dmg lub Windows .exe). Uruchom program i ustaw swój prywatny, 4-6 cyfrowy kod PIN bazy danych.
-              </p>
-            </div>
-
-            <div className="space-y-2 border border-ink/30 p-4 bg-background">
-              <div className="flex items-center gap-2 text-ink font-extrabold text-sm">
-                <span className="w-6 h-6 bg-ink text-inverse-ink text-xs font-bold flex items-center justify-center">2</span>
-                <span>Zaloguj się do Portalu</span>
-              </div>
-              <p className="text-xs text-muted leading-relaxed font-medium">
-                Zaloguj się powyżej w portalu licencyjnym (Clerk). Wygeneruje to Twój unikalny token licencyjny przypisany do konta fizjoterapeuty.
-              </p>
-            </div>
-
-            <div className="space-y-2 border border-ink/30 p-4 bg-background">
-              <div className="flex items-center gap-2 text-ink font-extrabold text-sm">
-                <span className="w-6 h-6 bg-ink text-inverse-ink text-xs font-bold flex items-center justify-center">3</span>
-                <span>Wklej Token lub Kliknij Deep-Link</span>
-              </div>
-              <p className="text-xs text-muted leading-relaxed font-medium">
-                Kliknij przycisk &quot;🚀 Otwórz &amp; Aktywuj&quot; lub skopiuj kod i wklej go w aplikacji desktopowej w zakładce &quot;Ustawienia -&gt; O programie / Licencja&quot;.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Download Section Bar */}
-      <div id="download-section" className="border-2 border-ink bg-neutral-900 text-inverse-ink p-6 sm:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col md:flex-row items-center justify-between gap-6">
-        <div>
-          <span className="text-[10px] uppercase font-extrabold text-emerald-400 tracking-wider">
-            Natywne Binaria • Zero-Cloud
-          </span>
-          <h3 className="text-2xl font-extrabold text-white mt-1">
-            Pobierz PhysioNotes V2.0 na Twój Komputer
-          </h3>
-          <p className="text-xs text-neutral-400 mt-1 max-w-xl">
-            Aplikacja działa w 100% lokalnie. Wymaga około 150 MB wolnego miejsca na dysku na program oraz bazę SQLite.
-          </p>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
-          <a
-            href="https://github.com/jakubdyrszka-pixel/PhysioNotes/releases/latest/download/PhysioNotes-macOS-universal.dmg"
-            className="flex-1 md:flex-none py-3 px-5 bg-emerald-500 text-ink font-extrabold text-xs uppercase tracking-wider border-2 border-ink shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:bg-emerald-400 transition flex items-center justify-center gap-2"
-          >
-            <Laptop className="h-4 w-4 shrink-0" />
-            <span>macOS (Apple Silicon &amp; Intel .dmg)</span>
-          </a>
-
-          <a
-            href="https://github.com/jakubdyrszka-pixel/PhysioNotes/releases/latest/download/PhysioNotes-Setup-x64.exe"
-            className="flex-1 md:flex-none py-3 px-5 bg-white text-ink font-extrabold text-xs uppercase tracking-wider border-2 border-ink shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:bg-neutral-200 transition flex items-center justify-center gap-2"
-          >
-            <Terminal className="h-4 w-4 shrink-0" />
-            <span>Windows 10/11 (Instalator .exe)</span>
-          </a>
         </div>
       </div>
     </div>

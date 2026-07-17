@@ -22,9 +22,7 @@ export const projects = [
     role: "AI Product Builder",
     metrics: ["Offline-first", "ICD-10 coding", "PDF export", "Zero cloud"],
     stack: ["React", "Electron", "TypeScript", "Node.js", "Tailwind"],
-    links: {
-      github: "https://github.com/jakubdyrszka-pixel/PhysioNotes",
-    },
+    links: {},
     images: [
       "/images/physionotes/Screenshot%202026-07-01%20at%2013.13.58.png",
       "/images/physionotes/Screenshot%202026-07-01%20at%2013.11.10.png",

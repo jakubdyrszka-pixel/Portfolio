@@ -1,155 +1,124 @@
+import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Section } from "@/components/ui/section";
-import { PhysioNotesLandingClient } from "@/components/physionotes/PhysioNotesLandingClient";
-import { PhysioNotesGallery } from "@/components/physionotes/PhysioNotesGallery";
-import { PhysioNotesKnowHow } from "@/components/physionotes/PhysioNotesKnowHow";
+import { PhysioNotesHero } from "@/components/physionotes/PhysioNotesHero";
+import { PhysioNotesTrust } from "@/components/physionotes/PhysioNotesTrust";
+import { PhysioNotesShowcase } from "@/components/physionotes/PhysioNotesShowcase";
+import { PhysioNotesWorkflow } from "@/components/physionotes/PhysioNotesWorkflow";
 import { PhysioNotesFAQ } from "@/components/physionotes/PhysioNotesFAQ";
-import { getProject } from "@/lib/projects";
+import { ArrowRight, Download } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "PhysioNotes V2.0 | Elektroniczna Dokumentacja Medyczna & Zero-Cloud",
+  title: "PhysioNotes V2.0 | Suwerenna Elektroniczna Dokumentacja Medyczna",
   description:
-    "Suwerenna, natywna aplikacja desktopowa dla fizjoterapeutów z lokalnym szyfrowaniem bazy danych AES-256-GCM, biblioteką szablonów i pełną zgodnością RODO jako ADO.",
+    "Nowoczesna, natywna aplikacja desktopowa dla fizjoterapeutów z lokalnym szyfrowaniem bazy danych AES-256-GCM, 7-sekcyjnym wywiadem SOAP oraz pełną zgodnością RODO jako ADO.",
 };
 
 export default function PhysioNotesPage() {
-  const project = getProject("physionotes");
-
-  if (!project) {
-    return null;
-  }
-
-  const content = project.pl;
-
   return (
-    <div className="min-h-screen bg-background">
-      {/* Top Header / Navigation Bar */}
-      <header className="sticky top-0 z-40 border-b border-ink bg-background/95 px-4 backdrop-blur sm:px-6 lg:px-10">
-        <nav className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 text-sm font-bold">
-          <Link className="flex items-center gap-2.5" href="/pl">
-            <span className="h-3 w-3 rounded-full border border-ink bg-emerald-500" aria-hidden="true" />
-            <span className="tracking-tight">Jakub Dyrszka / Portfolio</span>
-          </Link>
-          <div className="flex items-center gap-4 text-xs">
-            <Link className="text-muted hover:text-ink transition font-extrabold" href="/pl/projects">
-              ← Wszystkie projekty
+    <div className="min-h-screen bg-white dark:bg-[#111111] text-[#111111] dark:text-white selection:bg-emerald-500 selection:text-[#111111] font-sans">
+      {/* Sleek Glassmorphic Header (Linear / Arc / Vercel style) */}
+      <header className="sticky top-0 z-40 bg-white/80 dark:bg-[#111111]/80 backdrop-blur-xl border-b border-neutral-200/60 dark:border-neutral-800/60 transition-colors">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+          <div className="flex items-center gap-8">
+            <Link href="/pl" className="flex items-center gap-2.5 group">
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 group-hover:scale-110 transition-transform duration-200" aria-hidden="true" />
+              <span className="font-semibold text-sm sm:text-base tracking-tight text-[#111111] dark:text-white">
+                PhysioNotes <span className="text-emerald-600 dark:text-emerald-400 font-medium">V2.0</span>
+              </span>
             </Link>
+
+            <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-neutral-600 dark:text-neutral-400">
+              <a href="#showcase" className="hover:text-[#111111] dark:hover:text-white transition">Możliwości</a>
+              <a href="#faq" className="hover:text-[#111111] dark:hover:text-white transition">FAQ</a>
+              <a href="#download" className="hover:text-[#111111] dark:hover:text-white transition">Pobierz</a>
+            </nav>
           </div>
-        </nav>
+
+          <div className="flex items-center gap-4">
+            <Link 
+              href="/pl/projects" 
+              className="text-xs sm:text-sm text-neutral-500 hover:text-[#111111] dark:text-neutral-400 dark:hover:text-white transition font-medium hidden sm:inline-block"
+            >
+              ← Portfolio
+            </Link>
+            
+            <a
+              href="#download"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#111111] dark:bg-white text-white dark:text-[#111111] hover:bg-neutral-800 dark:hover:bg-neutral-100 text-xs sm:text-sm font-medium shadow-sm transition-all duration-200"
+            >
+              <Download className="h-3.5 w-3.5 text-emerald-400 dark:text-emerald-600" />
+              <span>Pobierz Mac/Win</span>
+            </a>
+          </div>
+        </div>
       </header>
 
-      {/* Interactive Hero & Licensing/Clerk Portal */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pt-8 pb-4">
-        <PhysioNotesLandingClient />
-      </div>
+      {/* Main Sections (Pure Modern SaaS Design Language) */}
+      <main>
+        {/* 1. Hero */}
+        <PhysioNotesHero />
 
-      {/* Quick Architecture Bar */}
-      <Section className="border-b border-ink bg-background">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <div className="border-2 border-ink p-5 bg-neutral-50 dark:bg-neutral-900/50 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-muted">Architektura</h3>
-            <p className="mt-2 text-sm font-extrabold text-ink">Zero-Cloud / Local-First</p>
-          </div>
-          <div className="border-2 border-ink p-5 bg-neutral-50 dark:bg-neutral-900/50 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-muted">Szyfrowanie</h3>
-            <p className="mt-2 text-sm font-extrabold text-ink">AES-256-GCM + klucz w Keychain</p>
-          </div>
-          <div className="border-2 border-ink p-5 bg-neutral-50 dark:bg-neutral-900/50 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-muted">Kompatybilność</h3>
-            <p className="mt-2 text-sm font-extrabold text-ink">macOS (Apple Silicon &amp; Intel) / Win</p>
-          </div>
-          <div className="border-2 border-ink p-5 bg-neutral-50 dark:bg-neutral-900/50 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-muted">Status prawny</h3>
-            <p className="mt-2 text-sm font-extrabold text-ink">Narzędzie administracyjne EDM</p>
-          </div>
+        {/* 2. Zaufanie (Zero Cloud / AES-256 / Offline / EDM) */}
+        <PhysioNotesTrust />
+
+        {/* 3. Screenshot + korzyści & 5. Kolejne screenshoty */}
+        <div className="py-20 sm:py-28 lg:py-36 border-t border-neutral-200/60 dark:border-neutral-800/60">
+          <PhysioNotesShowcase />
         </div>
-      </Section>
 
-      {/* Detailed Case Study & Zero-Cloud Philosophy */}
-      <Section 
-        eyebrow="Filozofia Produktu • RODO & Prywatność"
-        title="Dlaczego PhysioNotes działa lokalnie w modelu Zero-Cloud?"
-        className="border-b border-ink"
-      >
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 items-start">
-          <div className="lg:col-span-5 space-y-4">
-            <p className="text-sm leading-relaxed text-ink font-semibold bg-neutral-100 dark:bg-neutral-900/60 p-4 border-l-4 border-ink">
-              {content.problem}
-            </p>
-            <p className="text-sm leading-relaxed text-muted">
-              W tradycyjnych chmurowych systemach medycznych awaria internetu lub awaria serwera chmurowego oznacza natychmiastową blokadę dostępu do kart pacjentów. Ponadto fizjoterapeuta jako Administrator Danych Osobowych (ADO) musi powierzać wrażliwe dane zdrowotne podmiotom trzecim (złożone umowy DPA / powierzenie RODO).
-            </p>
-            <p className="text-sm font-extrabold text-ink leading-relaxed">
-              PhysioNotes zmienia ten paradygmat: licencja i telemetria są weryfikowane przez Twoje konto na tej stronie (Clerk), ale cała kliniczna baza pacjentów spoczywa WYŁĄCZNIE na Twoim dysku, zabezpieczona Twoim prywatnym kodem PIN.
-            </p>
-          </div>
+        {/* 4. Jak działa (3 kroki) */}
+        <PhysioNotesWorkflow />
 
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {content.features.map((feature, idx) => (
-              <div 
-                key={idx} 
-                className="border-2 border-ink bg-neutral-50 dark:bg-neutral-900/30 p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex flex-col justify-between hover:translate-x-0.5 hover:translate-y-0.5 transition"
+        {/* 6. FAQ */}
+        <PhysioNotesFAQ />
+
+        {/* 7. Bottom CTA Banner (Linear/Vercel style) */}
+        <section className="py-20 sm:py-28 border-t border-neutral-200/60 dark:border-neutral-800/60 text-center">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6">
+            <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+              Pracuj Szybciej i Pewniej
+            </span>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-[#111111] dark:text-white leading-tight">
+              Gotowy na suwerenną dokumentację medyczną?
+            </h2>
+            <p className="mt-4 text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal">
+              Zrób pierwszy krok do wywiadów SOAP uzupełnianych w niespełna minutę. Brak umów chmurowych i 100% kontroli nad danymi pacjentów.
+            </p>
+            <div className="mt-8 flex justify-center">
+              <a
+                href="#download"
+                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#111111] font-medium text-base shadow-[0_4px_25px_rgba(16,185,129,0.25)] hover:scale-[1.02] transition-all duration-200"
               >
-                <div>
-                  <span className="inline-block px-2 py-0.5 border border-ink bg-ink text-inverse-ink text-[10px] font-bold uppercase mb-3">
-                    Moduł 0{idx + 1}
-                  </span>
-                  <h3 className="text-lg font-extrabold text-ink">{feature.title}</h3>
-                  <p className="mt-2 text-xs leading-relaxed text-muted font-medium">{feature.body}</p>
-                </div>
-              </div>
-            ))}
-            <div className="border-2 border-ink bg-emerald-50 dark:bg-emerald-950/20 p-6 shadow-[6px_6px_0px_0px_rgba(16,185,129,1)] flex flex-col justify-between">
-              <div>
-                <span className="inline-block px-2 py-0.5 border border-emerald-600 bg-emerald-600 text-white text-[10px] font-bold uppercase mb-3">
-                  Zgodność MDR
-                </span>
-                <h3 className="text-lg font-extrabold text-ink">Wyłączenie MDR 2017/745</h3>
-                <p className="mt-2 text-xs leading-relaxed text-muted font-medium">
-                  Zgodnie z wytycznymi MDCG 2019-11 oprogramowanie służące wyłącznie do archiwizacji wywiadów, notatek z wizyt i wystawiania dokumentów bez algorytmów diagnozowania nie stanowi wyrobu medycznego.
-                </p>
-              </div>
+                <Download className="h-5 w-5" />
+                <span>Przejdź do pobierania i aktywacji</span>
+                <ArrowRight className="h-4 w-4 opacity-80" />
+              </a>
             </div>
           </div>
-        </div>
-      </Section>
+        </section>
+      </main>
 
-      {/* Interactive Screenshot Showcase & Gallery */}
-      <Section
-        eyebrow="Przegląd Interfejsu • Właściwości Techniczne"
-        title="Galeria Zrzutów Ekranu w Czasie Rzeczywistym"
-        className="border-b border-ink"
-      >
-        <PhysioNotesGallery />
-      </Section>
+      {/* 8. Footer (Linear / Vercel style) */}
+      <footer className="py-16 border-t border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#111111] text-neutral-500 dark:text-neutral-400 text-xs sm:text-sm font-medium">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <span className="h-2 w-2 rounded-full bg-emerald-500" />
+            <span>© {new Date().getFullYear()} PhysioNotes V2.0 • Suwerenne narzędzie EDM dla fizjoterapeutów.</span>
+          </div>
 
-      {/* Comprehensive Know-How & Clinical Practice Guide */}
-      <Section
-        eyebrow="Podręcznik Praktyki Klinicznej • EDM"
-        title="Know-How Fizjoterapeuty w PhysioNotes V2.0"
-        className="border-b border-ink"
-      >
-        <PhysioNotesKnowHow />
-      </Section>
-
-      {/* FAQ Section */}
-      <Section
-        eyebrow="Pytania i Odpowiedzi • Baza Wiedzy"
-        title="Najczęściej Zadawane Pytania (FAQ)"
-        className="border-b border-ink"
-      >
-        <PhysioNotesFAQ />
-      </Section>
-
-      {/* Footer */}
-      <footer className="py-12 px-4 text-center text-xs font-bold text-muted border-t border-ink bg-background">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© {new Date().getFullYear()} Jakub Dyrszka. Wszystkie prawa zastrzeżone. PhysioNotes V2.0.</p>
-          <div className="flex items-center gap-6">
-            <Link href="/pl" className="hover:text-ink transition">Strona główna</Link>
-            <Link href="/pl/projects" className="hover:text-ink transition">Portfolio</Link>
-            <a href="https://github.com/jakubdyrszka-pixel/PhysioNotes" target="_blank" rel="noreferrer" className="hover:text-ink transition">GitHub Repository</a>
+          <div className="flex flex-wrap items-center justify-center gap-6">
+            <Link href="/pl" className="hover:text-[#111111] dark:hover:text-white transition">Strona główna</Link>
+            <Link href="/pl/projects" className="hover:text-[#111111] dark:hover:text-white transition">Wszystkie projekty</Link>
+            <a 
+              href="https://github.com/jakubdyrszka-pixel/PhysioNotes" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="inline-flex items-center gap-1 hover:text-[#111111] dark:hover:text-white transition"
+            >
+              <span>GitHub Repository</span>
+              <ArrowRight className="h-3.5 w-3.5 -rotate-45" />
+            </a>
           </div>
         </div>
       </footer>

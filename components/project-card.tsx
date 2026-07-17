@@ -90,8 +90,15 @@ export function ProjectCard({ project, locale, index }: ProjectCardProps) {
                 {t.actions.github}
               </Button>
             )}
-            <Button href={`/${locale}/projects/${project.slug}`} variant="ghost">
-              {t.actions.readCaseStudy}
+            <Button
+              href={project.slug === "physionotes" ? "/physionotes" : `/${locale}/projects/${project.slug}`}
+              variant="ghost"
+            >
+              {project.slug === "physionotes"
+                ? locale === "pl"
+                  ? "Strona produktu"
+                  : "Product page"
+                : t.actions.readCaseStudy}
             </Button>
           </div>
         </div>
