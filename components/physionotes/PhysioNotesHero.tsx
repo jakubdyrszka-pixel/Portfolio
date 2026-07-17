@@ -14,7 +14,7 @@ export function PhysioNotesHero() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-neutral-200/80 dark:border-neutral-800 bg-white/70 dark:bg-neutral-900/70 backdrop-blur-md shadow-sm text-xs sm:text-sm font-medium text-neutral-800 dark:text-neutral-200 mb-8 transition duration-300 hover:border-neutral-300 dark:hover:border-neutral-700">
           <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Suwerenna Elektroniczna Dokumentacja Medyczna</span>
+          <span>Nowoczesna Elektroniczna Dokumentacja Medyczna</span>
           <span className="text-neutral-300 dark:text-neutral-700">|</span>
           <span className="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
             <ShieldCheck className="h-3.5 w-3.5" />
@@ -24,12 +24,12 @@ export function PhysioNotesHero() {
 
         {/* Strong Headline (56-72 px) */}
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-[#111111] dark:text-white sm:leading-[1.08] max-w-4xl mx-auto">
-          Suwerenna dokumentacja medyczna. Wywiad SOAP w 60 sekund.
+          Szybsza dokumentacja. Więcej czasu dla pacjentów.
         </h1>
 
         {/* One sentence explaining the product (18 px) */}
         <p className="mt-6 text-base sm:text-lg lg:text-xl text-neutral-600 dark:text-neutral-400 font-normal leading-relaxed max-w-2xl mx-auto">
-          Natywna aplikacja desktopowa dla fizjoterapeutów. Pełna kontrola i prywatność danych pacjentów dzięki lokalnej architekturze bazy danych, szyfrowaniu AES-256-GCM oraz natychmiastowej responsywności interfejsu.
+          Nowoczesna aplikacja desktopowa dla fizjoterapeutów z lokalną bazą danych, pełną prywatnością pacjentów i natychmiastową responsywnością. Dane są zabezpieczone szyfrowaniem AES-256-GCM.
         </p>
 
         {/* Two CTAs */}

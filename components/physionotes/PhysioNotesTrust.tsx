@@ -14,7 +14,7 @@ const trustCards: TrustCard[] = [
   {
     icon: ShieldCheck,
     badge: "Architektura Zero-Cloud",
-    title: "100% Suwerenność Danych Medycznych",
+    title: "100% Prywatności i Kontroli nad Danymi",
     description:
       "Całkowita niezależność od infrastruktury chmurowej. Kartoteki pacjentów, historia kliniczna oraz biblioteki szablonów są przechowywane wyłącznie na lokalnym dysku stacji roboczej, co eliminuje ryzyko wycieku z zewnętrznych serwerów.",
   },

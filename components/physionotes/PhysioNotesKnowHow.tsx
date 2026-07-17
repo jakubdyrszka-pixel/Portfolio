@@ -171,7 +171,7 @@ const knowHowSections: KnowHowSection[] = [
         }
       ],
       highlightBox: {
-        title: "Suwerenność i Spokój",
+        title: "Pełna Kontrola i Spokój",
         text: "Awaria internetu u dostawców chmurowych potrafi sparaliżować gabinet na cały dzień. Z PhysioNotes V2.0 masz 100% pewności, że otworzysz kartę pacjenta w każdej sekundzie, w piwnicy, w gabinecie czy na wyjeździe sportowym."
       }
     }

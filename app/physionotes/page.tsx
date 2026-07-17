@@ -9,7 +9,7 @@ import { PhysioNotesFAQ } from "@/components/physionotes/PhysioNotesFAQ";
 import { ArrowRight, Download } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "PhysioNotes V2.0 | Suwerenna Elektroniczna Dokumentacja Medyczna",
+  title: "PhysioNotes V2.0 | Nowoczesna Elektroniczna Dokumentacja Medyczna",
   description:
     "Nowoczesna, natywna aplikacja desktopowa dla fizjoterapeutów z lokalnym szyfrowaniem bazy danych AES-256-GCM, 7-sekcyjnym wywiadem SOAP oraz pełną zgodnością RODO jako ADO.",
 };
@@ -80,7 +80,7 @@ export default function PhysioNotesPage() {
               Pracuj Szybciej i Pewniej
             </span>
             <h2 className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-[#111111] dark:text-white leading-tight">
-              Gotowy na suwerenną dokumentację medyczną?
+              Gotowy na nowoczesną dokumentację medyczną?
             </h2>
             <p className="mt-4 text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal">
               Zrób pierwszy krok do wywiadów SOAP uzupełnianych w niespełna minutę. Brak umów chmurowych i 100% kontroli nad danymi pacjentów.
@@ -104,7 +104,7 @@ export default function PhysioNotesPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <span className="h-2 w-2 rounded-full bg-emerald-500" />
-            <span>© {new Date().getFullYear()} PhysioNotes V2.0 • Suwerenne narzędzie EDM dla fizjoterapeutów.</span>
+            <span>© {new Date().getFullYear()} PhysioNotes V2.0 • Nowoczesne narzędzie EDM dla fizjoterapeutów.</span>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6">

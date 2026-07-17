@@ -108,7 +108,7 @@ const galleryItems: GalleryItem[] = [
     category: "Eksport & Backup",
     src: "/images/physionotes/Screenshot%202026-07-01%20at%2013.13.58.png",
     icon: RefreshCw,
-    summary: "Pełna suwerenność danych: łatwy eksport całej bazy do formatu JSON lub pacjentów do arkusza CSV i odtwarzanie na nowym sprzęcie.",
+    summary: "Pełna kontrola nad danymi: łatwy eksport całej bazy do formatu JSON lub pacjentów do arkusza CSV i odtwarzanie na nowym sprzęcie.",
     details: [
       "Eksport pełnego backupu (JSON) zawierającego pacjentów, wszystkie wizyty, plany leczenia, szablony i ustawienia w jednym pliku",
       "Eksport listy pacjentów do uniwersalnego formatu CSV zgodnego z Excel / Numbers w celach statystycznych lub księgowych",

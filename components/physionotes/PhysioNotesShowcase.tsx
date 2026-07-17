@@ -68,11 +68,11 @@ const secondaryFeatures: ShowcaseFeature[] = [
       "Paradygmat Zero-Knowledge – twórcy oprogramowania nie posiadają dostępu do haseł ani dokumentacji pacjentów.",
       "Automatyczna blokada interfejsu chroni wrażliwe dane zdrowotne w otwartej przestrzeni gabinetu fizjoterapeutycznego."
     ],
-    clinicalHighlight: "Gwarancja pełnej suwerenności danych medycznych oraz zwolnienie z procedur i umów powierzenia RODO (DPA)."
+    clinicalHighlight: "Gwarancja pełnej prywatności i kontroli nad danymi medycznymi oraz zwolnienie z procedur i umów powierzenia RODO (DPA)."
   },
   {
     id: "themes-backup",
-    badge: "Personalizacja • Suwerenny Backup",
+    badge: "Personalizacja • Bezpieczny Backup",
     title: "Ergonomia pracy klinicznej i niezależna migracja",
     subtitle:
       "Dostosuj parametry wizualne do warunków oświetleniowych gabinetu i zarządzaj lokalnymi kopiami zapasowymi z pełną niezależnością.",
@@ -80,7 +80,7 @@ const secondaryFeatures: ShowcaseFeature[] = [
     points: [
       "Trzy tryby wizualne: Jasny, Ciemny (redukujący zmęczenie wzroku podczas wieczornych sesji) oraz Systemowy.",
       "Cztery profesjonalne palety akcentów oraz płynne skalowanie typografii pod ekrany laptopów i monitory 4K.",
-      "Błyskawiczny suwerenny eksport kompletnej bazy pacjentów do zaszyfrowanego pliku JSON lub formatu CSV.",
+      "Błyskawiczny i bezpieczny eksport kompletnej bazy pacjentów do zaszyfrowanego pliku JSON lub formatu CSV.",
       "Wysoka wydajność natywna w izolowanym środowisku Electron, bez przeładowywania stron czy opóźnień przeglądarki."
     ],
     clinicalHighlight: "W przypadku modernizacji sprzętu komputerowego migracja kompletnej bazy gabinetu zajmuje mniej niż minutę."
