@@ -49,6 +49,7 @@ export async function GET(request: Request) {
         ? 'application/vnd.microsoft.portable-executable' 
         : 'application/x-apple-diskimage';
 
+      /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
       return new NextResponse(readableStream as any, {
         status: 200,
         headers: {

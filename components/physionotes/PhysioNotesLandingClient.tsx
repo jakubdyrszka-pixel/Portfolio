@@ -148,6 +148,7 @@ export function PhysioNotesLandingClient() {
 
             {/* Download Buttons */}
             <div className="space-y-4">
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
               <a
                 href="/api/download?platform=mac"
                 className="w-full flex items-center justify-between px-6 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-[#111111] font-medium transition-all duration-200 hover:scale-[1.01] shadow-[0_4px_25px_rgba(16,185,129,0.25)]"
@@ -162,6 +163,7 @@ export function PhysioNotesLandingClient() {
                 <Download className="h-5 w-5 text-[#111111]" />
               </a>
 
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
               <a
                 href="/api/download?platform=win"
                 className="w-full flex items-center justify-between px-6 py-4 rounded-2xl border border-neutral-700 hover:border-neutral-500 bg-neutral-800/80 hover:bg-neutral-800 text-white font-medium transition-all duration-200 hover:scale-[1.01]"
