@@ -19,8 +19,8 @@ export async function GET(request: Request) {
       updateAvailable,
       mandatoryUpdate: false,
       downloadUrl: platform === 'win'
-        ? 'https://jakubdyrszka.dev/downloads/PhysioNotes-1.1.0-win.exe'
-        : 'https://jakubdyrszka.dev/downloads/PhysioNotes-1.1.0-arm64.dmg',
+        ? 'https://jakubdyrszka.dev/api/download?platform=win'
+        : 'https://jakubdyrszka.dev/api/download?platform=mac',
       sha512: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b85554162638890280b18287e0258dc788938a53120141f2a33ae9f7ffefc7dcf643',
       releaseNotes: 'Added ICD-10 search improvements and auto-save enhancements.',
     };

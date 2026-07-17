@@ -64,6 +64,7 @@ export function PhysioNotesLandingClient() {
       status: "ACTIVE"
     };
 
+    let success = false;
     try {
       const res = await fetch("http://127.0.0.1:43210/activate", {
         method: "POST",
@@ -72,6 +73,8 @@ export function PhysioNotesLandingClient() {
       });
       if (res.ok) {
         setActivationStatus("✅ Licencja zsynchronizowana automatycznie! Przełącz okno na aplikację PhysioNotes.");
+        success = true;
+        if (typeof window !== "undefined") localStorage.removeItem("physionotes_desktop_flow");
         if (isManualClick) setActivating(false);
         return;
       }
@@ -79,16 +82,40 @@ export function PhysioNotesLandingClient() {
       // Loopback server offline or app not running yet
     }
 
-    if (isManualClick) {
+    const isDesktopFlow = typeof window !== "undefined" && (
+      new URLSearchParams(window.location.search).get("desktop") === "true" ||
+      localStorage.getItem("physionotes_desktop_flow") === "true"
+    );
+
+    if (!success && (isManualClick || isDesktopFlow)) {
+      if (typeof window !== "undefined") localStorage.removeItem("physionotes_desktop_flow");
       window.location.href = `physionotes://activate?token=${encodeURIComponent(licenseToken)}&email=${encodeURIComponent(user.primaryEmailAddress?.emailAddress || "")}&userId=${encodeURIComponent(user.id)}`;
-      setActivationStatus("✅ Wysłano sygnał aktywacji do PhysioNotes.");
-      setActivating(false);
+      setActivationStatus("✅ Wysłano sygnał aktywacji do PhysioNotes. Przełącz okno na aplikację.");
+      if (isManualClick) setActivating(false);
     }
   };
 
   useEffect(() => {
-    if (isSignedIn && user && isLoaded) {
+    if (typeof window === "undefined" || !isLoaded) return;
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get("mode");
+    const isDesktop = params.get("desktop") === "true";
+
+    if (isSignedIn && user) {
+      if (mode === "sign_in" || mode === "sign_up") {
+        const el = document.getElementById("download");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }
       triggerActivation(false);
+    } else if (!isSignedIn) {
+      if (isDesktop || mode === "sign_in" || mode === "sign_up") {
+        localStorage.setItem("physionotes_desktop_flow", "true");
+      }
+      if (mode === "sign_in") {
+        openSignIn({ forceRedirectUrl: "/physionotes#download" });
+      } else if (mode === "sign_up") {
+        openSignUp({ forceRedirectUrl: "/physionotes#download" });
+      }
     }
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [isSignedIn, user, isLoaded]);
@@ -122,7 +149,7 @@ export function PhysioNotesLandingClient() {
             {/* Download Buttons */}
             <div className="space-y-4">
               <a
-                href="https://github.com/jakubdyrszka-pixel/PhysioNotes/releases/latest/download/PhysioNotes-macOS-universal.dmg"
+                href="/api/download?platform=mac"
                 className="w-full flex items-center justify-between px-6 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-[#111111] font-medium transition-all duration-200 hover:scale-[1.01] shadow-[0_4px_25px_rgba(16,185,129,0.25)]"
               >
                 <div className="flex items-center gap-3.5">
@@ -136,7 +163,7 @@ export function PhysioNotesLandingClient() {
               </a>
 
               <a
-                href="https://github.com/jakubdyrszka-pixel/PhysioNotes/releases/latest/download/PhysioNotes-Setup-x64.exe"
+                href="/api/download?platform=win"
                 className="w-full flex items-center justify-between px-6 py-4 rounded-2xl border border-neutral-700 hover:border-neutral-500 bg-neutral-800/80 hover:bg-neutral-800 text-white font-medium transition-all duration-200 hover:scale-[1.01]"
               >
                 <div className="flex items-center gap-3.5">
@@ -189,7 +216,7 @@ export function PhysioNotesLandingClient() {
 
                   <div className="space-y-3 pt-2">
                     <button
-                      onClick={() => openSignIn({ forceRedirectUrl: "/physionotes" })}
+                      onClick={() => openSignIn({ forceRedirectUrl: "/physionotes#download" })}
                       className="w-full py-4 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#111111] font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2.5 shadow-sm"
                     >
                       <KeyRound className="h-4.5 w-4.5" />
@@ -197,7 +224,7 @@ export function PhysioNotesLandingClient() {
                     </button>
 
                     <button
-                      onClick={() => openSignUp({ forceRedirectUrl: "/physionotes" })}
+                      onClick={() => openSignUp({ forceRedirectUrl: "/physionotes#download" })}
                       className="w-full py-4 px-5 rounded-xl border border-neutral-700 hover:border-neutral-600 bg-neutral-800 hover:bg-neutral-800/80 text-white font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2.5"
                     >
                       <span>Zarejestruj nową praktykę medyczną</span>
