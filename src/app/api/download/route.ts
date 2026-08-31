@@ -68,8 +68,8 @@ export async function GET(request: Request) {
     }
 
     const downloadUrl = platform === 'win'
-      ? 'https://t1mjmzioibxiosxy.public.blob.vercel-storage.com/releases/PhysioNotes%20Setup%201.0.3-eeVHNu1CltvJdGFVOZwXbM9jM7EroP.exe'
-      : 'https://t1mjmzioibxiosxy.public.blob.vercel-storage.com/releases/PhysioNotes%20Setup%201.0.3-BFCbi0mgJQtQd4sdL7wStCDdbeTDb1.dmg';
+      ? 'https://t1mjmzioibxiosxy.public.blob.vercel-storage.com/releases/PhysioNotes%20Setup%201.0.3.exe'
+      : 'https://t1mjmzioibxiosxy.public.blob.vercel-storage.com/releases/PhysioNotes%20Setup%201.0.3.dmg';
 
     return NextResponse.redirect(downloadUrl);
   } catch (error) {
