@@ -110,6 +110,8 @@ export default function PhysioNotesPage() {
           <div className="flex flex-wrap items-center justify-center gap-6">
             <Link href="/pl" className="hover:text-[#111111] dark:hover:text-white transition">Strona główna</Link>
             <Link href="/pl/projects" className="hover:text-[#111111] dark:hover:text-white transition">Wszystkie projekty</Link>
+            <Link href="/pl/privacy" className="hover:text-[#111111] dark:hover:text-white transition">Polityka prywatności / Cookies</Link>
+            <Link href="/pl/terms" className="hover:text-[#111111] dark:hover:text-white transition">Regulamin</Link>
             <a 
               href="https://github.com/jakubdyrszka-pixel/PhysioNotes" 
               target="_blank" 
