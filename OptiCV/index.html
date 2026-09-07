@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="TrafCV — zrozum, co naprawdę komunikuje Twoje CV." />
+    <title>TrafCV — analiza CV</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="overrides.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#start" aria-label="TrafCV, strona główna">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span>Traf<span>CV</span></span>
+      </a>
+      <div class="topbar-note"><span class="status-dot"></span> Analiza bez zgadywania</div>
+    </header>
+
+    <main>
+      <section class="hero" id="start">
+        <div class="eyebrow"><span class="eyebrow-line"></span> analiza CV</div>
+        <h1>Zobacz, co naprawdę<br /><em>komunikuje Twoje CV.</em></h1>
+        <p class="hero-copy">Wgraj CV i dostaniesz konkretną analizę jego treści,<br class="desktop-only" /> mocnych stron oraz najważniejszych braków.</p>
+      </section>
+
+      <section class="workspace" aria-label="Formularz analizy CV">
+        <div class="form-card cv-card">
+          <div class="card-heading">
+            <div class="step-number">01</div>
+            <div><h2>Dodaj swoje CV</h2><p>PDF, DOCX lub tekst</p></div>
+          </div>
+          <label class="dropzone" id="dropzone" for="cv-file">
+            <input id="cv-file" type="file" accept=".pdf,.doc,.docx,.txt" />
+            <span class="upload-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 15v3.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V15" /></svg></span>
+            <strong id="file-label">Upuść plik tutaj</strong>
+            <span id="file-helper">lub <u>wybierz z komputera</u></span>
+            <small>PDF, DOCX — maks. 10 MB</small>
+          </label>
+          <div class="divider"><span>albo wklej tekst CV</span></div>
+          <label class="visually-hidden" for="cv-text">Tekst CV</label>
+          <textarea id="cv-text" class="cv-textarea" placeholder="Wklej tutaj treść swojego CV..."></textarea>
+        </div>
+
+        <div class="form-card focus-card">
+          <div class="focus-copy"><span class="focus-badge">TYLKO TWOJE CV</span><h2>Jedna rzecz.<br /><em>Konkretny feedback.</em></h2><p>Bez ogólników. Zobacz, co w Twoim CV jest mocne, a co wymaga dopracowania.</p></div>
+          <div class="focus-points"><span>✓ Czytelność treści</span><span>✓ Siła doświadczenia</span><span>✓ Brakujące informacje</span></div>
+        </div>
+      </section>
+
+      <div class="analyze-row">
+        <button id="analyze-btn" class="analyze-btn" type="button"><span>Analizuj moje CV</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5" /></svg></button>
+        <span class="privacy-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.3 2.9 8.2 7 9.5 4.1-1.3 7-5.2 7-9.5V6l-7-3Z" /><path d="m9.5 12 1.7 1.7 3.5-3.5" /></svg> Twoje dane pozostają prywatne</span>
+      </div>
+
+      <section class="results" id="results" aria-live="polite">
+        <div class="results-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> Twój raport</div><h2>Co działa, co osłabia<br /><em>Twoje CV?</em></h2></div><div class="report-meta">ANALIZA CV<br /><strong>23 LIPCA 2026</strong></div></div>
+        <div class="score-grid">
+          <div class="score-card"><div class="score-label">Siła CV</div><div class="score-value"><span id="score-total">67</span><small>/100</small></div><div class="score-bar"><span style="width:67%"></span></div><p>Solidna baza. Kilka konkretnych zmian sprawi, że CV będzie bardziej przekonujące.</p></div>
+          <div class="score-breakdown">
+            <div class="metric"><span>Doświadczenie i osiągnięcia</span><b>78</b><i><span style="width:78%"></span></i></div>
+            <div class="metric"><span>Opis kompetencji</span><b>55</b><i><span style="width:55%"></span></i></div>
+            <div class="metric"><span>Projekty i konkrety</span><b>72</b><i><span style="width:72%"></span></i></div>
+            <div class="metric"><span>Kompletność informacji</span><b>60</b><i><span style="width:60%"></span></i></div>
+            <div class="metric"><span>Jakość i czytelność</span><b>70</b><i><span style="width:70%"></span></i></div>
+          </div>
+        </div>
+
+        <div class="analysis-detail-grid">
+          <div class="detail-card"><div class="detail-kicker">DLACZEGO TEN WYNIK</div><h3>Co obniża ocenę?</h3><ul id="score-reasons" class="detail-list"></ul></div>
+          <div class="detail-card"><div class="detail-kicker">KONKRETNE ZMIANY</div><h3>Co poprawić w pierwszej kolejności?</h3><ul id="score-suggestions" class="detail-list"></ul></div>
+        </div>
+
+        <div class="section-title"><span class="section-index">01</span><div><h3>Co wynika z Twojego CV</h3><p>Najważniejsze sygnały, które wysyła dokument</p></div></div>
+        <div class="requirements-table">
+          <div class="table-head"><span>OBSZAR</span><span>OCENA</span><span>WNIOSKI Z CV</span></div>
+          <div class="requirement-row"><strong>Doświadczenie</strong><span class="pill fulfilled">Mocne</span><p>Widać zakres pracy, ale brakuje więcej mierzalnych efektów.</p><span class="requirement-type">priorytet · wysoki</span></div>
+          <div class="requirement-row"><strong>Umiejętności</strong><span class="pill partial">Częściowe</span><p>Lista jest dobra, lecz nie zawsze ma potwierdzenie w projektach.</p><span class="requirement-type">priorytet · wysoki</span></div>
+          <div class="requirement-row"><strong>Projekty</strong><span class="pill fulfilled">Mocne</span><p>PhysioNotes pokazuje potencjał, ale opis wymaga większej konkretności.</p><span class="requirement-type">priorytet · średni</span></div>
+          <div class="requirement-row"><strong>Języki</strong><span class="pill unclear">Niejasne</span><p>Brak poziomu języka angielskiego.</p><span class="requirement-type">priorytet · średni</span></div>
+          <div class="requirement-row"><strong>Prezentacja</strong><span class="pill partial">Do poprawy</span><p>Kompetencje są widoczne, ale najważniejsze informacje giną w tekście.</p><span class="requirement-type">priorytet · wysoki</span></div>
+        </div>
+
+        <div class="insights-grid">
+          <div class="insight-panel"><div class="section-title compact"><span class="section-index">02</span><div><h3>Największe problemy CV</h3><p>Co dziś osłabia Twoją prezentację</p></div></div><ul class="insight-list"><li><span class="insight-icon red">!</span><div><strong>Za mało mierzalnych efektów</strong><p>Opisujesz zadania, ale rzadko pokazujesz rezultat swojej pracy.</p></div></li><li><span class="insight-icon amber">!</span><div><strong>Kompetencje bez kontekstu</strong><p>Lista umiejętności nie zawsze mówi, gdzie i jak ich używałeś.</p></div></li><li><span class="insight-icon amber">!</span><div><strong>PhysioNotes opisany zbyt ogólnie</strong><p>Projekt może być mocnym dowodem, ale potrzebuje technologii i zakresu odpowiedzialności.</p></div></li></ul></div>
+          <div class="insight-panel actions-panel"><div class="section-title compact"><span class="section-index">03</span><div><h3>Co zmienić</h3><p>Najkrótsza droga do mocniejszego CV</p></div></div><ol class="action-list"><li>Dodaj 1–2 mierzalne rezultaty przy każdym ważnym doświadczeniu.</li><li>Połącz umiejętności z konkretnymi projektami lub zadaniami.</li><li>Rozwiń opis PhysioNotes o technologie i własny wkład.</li><li>Dodaj poziom języka angielskiego i uporządkuj sekcje.</li></ol></div>
+        </div>
+        <div class="results-footnote"><span>To ocena jakości i kompletności CV, nie szansa na zatrudnienie.</span><span>Wynik uwzględnia konkretność, spójność i siłę dowodów w dokumencie.</span></div>
+      </section>
+    </main>
+    <footer><span>© 2026 TrafCV</span><span>Wgraj CV. Zrozum. Popraw.</span></footer>
+    <script src="cv-analysis.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

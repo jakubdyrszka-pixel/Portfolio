@@ -8,20 +8,20 @@ export async function GET(request: Request) {
     const platform = url.searchParams.get('platform') || 'mac';
 
     const macCandidates = [
-      path.resolve(process.cwd(), '../PhysioNotes V2.0/dist/PhysioNotes Setup 1.0.3.dmg'),
-      path.resolve(process.cwd(), '../PhysioNotes V2.0/dist/PhysioNotes-1.0.3-arm64.dmg'),
+      path.resolve(process.cwd(), '../PhysioNotes V2.0/dist/PhysioNotes Setup 1.0.4.dmg'),
+      path.resolve(process.cwd(), '../PhysioNotes V2.0/dist/PhysioNotes-1.0.4-arm64.dmg'),
       path.resolve(process.cwd(), '../PhysioNotes V2.0/dist/PhysioNotes.dmg'),
-      path.resolve(process.cwd(), 'public/downloads/PhysioNotes Setup 1.0.3.dmg'),
+      path.resolve(process.cwd(), 'public/downloads/PhysioNotes Setup 1.0.4.dmg'),
       path.resolve(process.cwd(), 'public/downloads/PhysioNotes-macOS.dmg'),
-      path.resolve(process.cwd(), 'public/downloads/PhysioNotes-1.0.3-arm64.dmg'),
+      path.resolve(process.cwd(), 'public/downloads/PhysioNotes-1.0.4-arm64.dmg'),
       path.resolve(process.cwd(), 'public/downloads/PhysioNotes.dmg')
     ];
 
     const winCandidates = [
-      path.resolve(process.cwd(), '../PhysioNotes V2.0/dist/PhysioNotes Setup 1.0.3.exe'),
+      path.resolve(process.cwd(), '../PhysioNotes V2.0/dist/PhysioNotes Setup 1.0.4.exe'),
       path.resolve(process.cwd(), '../PhysioNotes V2.0/dist/PhysioNotes.exe'),
       path.resolve(process.cwd(), 'public/downloads/PhysioNotes-Windows.exe'),
-      path.resolve(process.cwd(), 'public/downloads/PhysioNotes Setup 1.0.3.exe')
+      path.resolve(process.cwd(), 'public/downloads/PhysioNotes Setup 1.0.4.exe')
     ];
 
     const candidates = platform === 'win' ? winCandidates : macCandidates;
@@ -38,7 +38,6 @@ export async function GET(request: Request) {
       const stat = fs.statSync(targetFilePath);
       const stream = fs.createReadStream(targetFilePath);
 
-      /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
       const readableStream = new ReadableStream({
         start(controller) {
           stream.on('data', (chunk) => controller.enqueue(chunk));
@@ -55,7 +54,7 @@ export async function GET(request: Request) {
         ? 'application/vnd.microsoft.portable-executable' 
         : 'application/x-apple-diskimage';
 
-      /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return new NextResponse(readableStream as any, {
         status: 200,
         headers: {
@@ -68,8 +67,8 @@ export async function GET(request: Request) {
     }
 
     const downloadUrl = platform === 'win'
-      ? 'https://t1mjmzioibxiosxy.public.blob.vercel-storage.com/releases/PhysioNotes%20Setup%201.0.3.exe'
-      : 'https://t1mjmzioibxiosxy.public.blob.vercel-storage.com/releases/PhysioNotes%20Setup%201.0.3.dmg';
+      ? 'https://t1mjmzioibxiosxy.public.blob.vercel-storage.com/releases/PhysioNotes%20Setup%201.0.4.exe'
+      : 'https://t1mjmzioibxiosxy.public.blob.vercel-storage.com/releases/PhysioNotes%20Setup%201.0.4.dmg';
 
     return NextResponse.redirect(downloadUrl);
   } catch (error) {

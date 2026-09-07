@@ -27,8 +27,8 @@ export async function POST(request: Request) {
 
     const passwordHash = await hashPassword(password);
 
-    // Create user along with default 30-day PROFESSIONAL license
-    const trialExpiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days free Professional
+    // Create user along with default 7-day PROFESSIONAL trial
+    const trialExpiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days free Professional
     const user = await prisma.user.create({
       data: {
         email,
@@ -40,9 +40,9 @@ export async function POST(request: Request) {
             tier: 'PROFESSIONAL',
             status: 'ACTIVE',
             expiresAt: trialExpiresAt,
-            gracePeriodDays: 30,
+            gracePeriodDays: 7,
             maxDevices: 3,
-            features: ['unlimited_patients', 'cloud_backup', 'export_pdf', 'icd10_search', 'local_storage'],
+            features: ['unlimited_patients', 'export_pdf', 'icd10_search', 'local_storage'],
           },
         },
       },

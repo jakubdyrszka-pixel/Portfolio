@@ -1,0 +1,5 @@
+{
+  "name": "trafcv-mvp",
+  "private": true,
+  "scripts": { "dev": "node server.js" }
+}

@@ -33,6 +33,14 @@ export async function POST(request: Request) {
       );
     }
 
+    // Users registered via Clerk (social login) may not have a password
+    if (!user.passwordHash) {
+      return NextResponse.json(
+        { error: 'This account uses social login. Please sign in via jakubdyrszka.dev.' },
+        { status: 401 }
+      );
+    }
+
     const isPasswordValid = await verifyPassword(password, user.passwordHash);
     if (!isPasswordValid) {
       return NextResponse.json(
