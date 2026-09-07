@@ -92,6 +92,7 @@ export default function PhysioNotesPage() {
               Aplikacja jest darmowa do pobrania. Po uruchomieniu wystarczy się zalogować, aby rozpocząć darmowy, 7-dniowy okres próbny.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
               <a
                 href="/api/download?platform=mac"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-medium text-base shadow-[0_4px_25px_rgba(16,185,129,0.3)] hover:scale-[1.02] transition-all duration-200"
@@ -99,6 +100,7 @@ export default function PhysioNotesPage() {
                 <Download className="h-5 w-5" />
                 <span>Pobierz dla macOS</span>
               </a>
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
               <a
                 href="/api/download?platform=win"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-white dark:bg-neutral-900 text-[#111111] dark:text-white border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 font-medium text-base shadow-sm hover:scale-[1.02] transition-all duration-200"
