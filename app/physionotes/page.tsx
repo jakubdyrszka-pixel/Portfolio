@@ -5,6 +5,7 @@ import { PhysioNotesHero } from "@/components/physionotes/PhysioNotesHero";
 import { PhysioNotesTrust } from "@/components/physionotes/PhysioNotesTrust";
 import { PhysioNotesShowcase } from "@/components/physionotes/PhysioNotesShowcase";
 import { PhysioNotesWorkflow } from "@/components/physionotes/PhysioNotesWorkflow";
+import { PhysioNotesPricing } from "@/components/physionotes/PhysioNotesPricing";
 import { PhysioNotesFAQ } from "@/components/physionotes/PhysioNotesFAQ";
 import { ArrowRight, Download } from "lucide-react";
 
@@ -30,6 +31,7 @@ export default function PhysioNotesPage() {
 
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-neutral-600 dark:text-neutral-400">
               <a href="#showcase" className="hover:text-[#111111] dark:hover:text-white transition">Możliwości</a>
+              <a href="#pricing" className="hover:text-[#111111] dark:hover:text-white transition">Cennik</a>
               <a href="#faq" className="hover:text-[#111111] dark:hover:text-white transition">FAQ</a>
               <a href="#download" className="hover:text-[#111111] dark:hover:text-white transition">Pobierz</a>
             </nav>
@@ -69,6 +71,9 @@ export default function PhysioNotesPage() {
 
         {/* 4. Jak działa (3 kroki) */}
         <PhysioNotesWorkflow />
+
+        {/* 5. Cennik */}
+        <PhysioNotesPricing />
 
         {/* 6. FAQ */}
         <PhysioNotesFAQ />
