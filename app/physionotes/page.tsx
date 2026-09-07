@@ -78,28 +78,38 @@ export default function PhysioNotesPage() {
         {/* 6. FAQ */}
         <PhysioNotesFAQ />
 
-        {/* 7. Bottom CTA Banner (Linear/Vercel style) */}
-        <section className="py-20 sm:py-28 border-t border-neutral-200/60 dark:border-neutral-800/60 text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6">
+        {/* 7. Bottom CTA Banner (Download Section) */}
+        <section id="download" className="py-20 sm:py-28 border-t border-neutral-200/60 dark:border-neutral-800/60 text-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/10 via-[#111111]/0 to-[#111111]/0 dark:from-emerald-900/20 pointer-events-none" />
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
             <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
               Pracuj Szybciej i Pewniej
             </span>
             <h2 className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-[#111111] dark:text-white leading-tight">
-              Gotowy na nowoczesną dokumentację medyczną?
+              Pobierz PhysioNotes V2.0
             </h2>
             <p className="mt-4 text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal">
-              Zrób pierwszy krok do wywiadów SOAP uzupełnianych w niespełna minutę. Brak umów chmurowych i 100% kontroli nad danymi pacjentów.
+              Aplikacja jest darmowa do pobrania. Po uruchomieniu wystarczy się zalogować, aby rozpocząć darmowy, 7-dniowy okres próbny.
             </p>
-            <div className="mt-8 flex justify-center">
+            <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
               <a
-                href="#download"
-                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#111111] font-medium text-base shadow-[0_4px_25px_rgba(16,185,129,0.25)] hover:scale-[1.02] transition-all duration-200"
+                href="/api/download?platform=mac"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-medium text-base shadow-[0_4px_25px_rgba(16,185,129,0.3)] hover:scale-[1.02] transition-all duration-200"
               >
                 <Download className="h-5 w-5" />
-                <span>Przejdź do pobierania i aktywacji</span>
-                <ArrowRight className="h-4 w-4 opacity-80" />
+                <span>Pobierz dla macOS</span>
+              </a>
+              <a
+                href="/api/download?platform=win"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-white dark:bg-neutral-900 text-[#111111] dark:text-white border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 font-medium text-base shadow-sm hover:scale-[1.02] transition-all duration-200"
+              >
+                <Download className="h-5 w-5 opacity-70" />
+                <span>Pobierz dla Windows</span>
               </a>
             </div>
+            <p className="mt-6 text-xs text-neutral-500">
+              Wymaga macOS 12+ (Apple Silicon / Intel) lub Windows 10/11.
+            </p>
           </div>
         </section>
       </main>
