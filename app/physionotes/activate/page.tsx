@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { useUser, SignInButton, SignUpButton } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 import Link from 'next/link';
-import { ArrowRight, Check, Copy, Loader2, AlertTriangle, Monitor, Download } from 'lucide-react';
+import { Check, Copy, Loader2, AlertTriangle, Monitor, Download } from 'lucide-react';
 
 type ActivationState = 'loading' | 'activating' | 'success' | 'expired' | 'error';
 

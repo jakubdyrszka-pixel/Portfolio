@@ -59,6 +59,7 @@ export default function DownloadPage() {
               Zoptymalizowane dla Apple Silicon (M1-M4) oraz procesorów Intel. Wymaga macOS 12 lub nowszego.
             </p>
             
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
               href="/api/download?platform=mac"
               className="mt-auto w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl bg-[#111111] dark:bg-white text-white dark:text-[#111111] hover:bg-neutral-800 dark:hover:bg-neutral-200 font-semibold transition-all shadow-sm"
@@ -89,6 +90,7 @@ export default function DownloadPage() {
               Oficjalny instalator 64-bit. Wymaga systemu Windows 10 lub Windows 11.
             </p>
             
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
               href="/api/download?platform=win"
               className="mt-auto w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all shadow-sm"

@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/database";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
-import { CreditCard, Monitor, Download, ArrowRight, Activity, LogOut } from "lucide-react";
+import { CreditCard, Monitor, Download, ArrowRight, Activity } from "lucide-react";
 
 export const metadata = {
   title: "Konto | PhysioNotes V2.0",
@@ -31,7 +31,6 @@ export default async function AccountPage() {
   });
 
   const activeLicense = dbUser?.licenses.find(l => l.status === 'ACTIVE' && l.expiresAt > new Date());
-  const allLicenses = dbUser?.licenses || [];
   const activeDevices = dbUser?.devices.filter(d => d.isActive) || [];
 
   return (

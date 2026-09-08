@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+
 import { prisma } from '@/lib/database';
 import crypto from 'crypto';
 
@@ -9,13 +9,10 @@ export async function POST(request: Request) {
     const params = new URLSearchParams(text);
 
     const tr_id = params.get('tr_id');
-    const tr_date = params.get('tr_date');
     const tr_crc = params.get('tr_crc'); // We will pass userId here
     const tr_amount = params.get('tr_amount');
-    const tr_paid = params.get('tr_paid');
     const tr_desc = params.get('tr_desc');
     const tr_status = params.get('tr_status');
-    const tr_error = params.get('tr_error');
     const tr_email = params.get('tr_email');
     const md5sum = params.get('md5sum');
 
