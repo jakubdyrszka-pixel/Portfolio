@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { ArrowRight, ShieldCheck, Sparkles, Download } from "lucide-react";
-import { PhysioNotesLandingClient } from "@/components/physionotes/PhysioNotesLandingClient";
 
 export function PhysioNotesHero() {
   return (
@@ -34,14 +34,14 @@ export function PhysioNotesHero() {
 
         {/* Two CTAs */}
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href="#download"
+          <Link
+            href="/physionotes/download"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#111111] font-medium text-base shadow-[0_4px_25px_rgba(16,185,129,0.25)] hover:shadow-[0_6px_30px_rgba(16,185,129,0.35)] transition-all duration-200 hover:scale-[1.02]"
           >
             <Download className="h-5 w-5" />
-            <span>Pobierz instalator</span>
+            <span>Pobierz za darmo</span>
             <ArrowRight className="h-4 w-4 opacity-80" />
-          </a>
+          </Link>
 
           <a
             href="#showcase"
@@ -69,9 +69,9 @@ export function PhysioNotesHero() {
         </div>
       </div>
 
-      {/* Download & License Portal embedded directly in place of the first photo */}
+      {/* Hero CTAs */}
       <div className="mt-14 sm:mt-18 lg:mt-22 max-w-6xl mx-auto px-4 sm:px-6">
-        <PhysioNotesLandingClient />
+        {/* Usunięto sekcję bezpośredniego pobierania i aktywacji z hero - zgodnie z nowym UX */}
       </div>
     </section>
   );

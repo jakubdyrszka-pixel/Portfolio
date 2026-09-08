@@ -45,13 +45,20 @@ export default function PhysioNotesPage() {
               ← Portfolio
             </Link>
             
-            <a
-              href="#download"
+            <Link 
+              href="/login" 
+              className="text-xs sm:text-sm text-[#111111] dark:text-white font-semibold hover:opacity-70 transition-opacity"
+            >
+              Zaloguj się
+            </Link>
+
+            <Link
+              href="/physionotes/download"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#111111] dark:bg-white text-white dark:text-[#111111] hover:bg-neutral-800 dark:hover:bg-neutral-100 text-xs sm:text-sm font-medium shadow-sm transition-all duration-200"
             >
               <Download className="h-3.5 w-3.5 text-emerald-400 dark:text-emerald-600" />
-              <span>Pobierz Mac/Win</span>
-            </a>
+              <span>Pobierz za darmo</span>
+            </Link>
           </div>
         </div>
       </header>
@@ -89,28 +96,20 @@ export default function PhysioNotesPage() {
               Pobierz PhysioNotes V2.0
             </h2>
             <p className="mt-4 text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal">
-              Aplikacja jest darmowa do pobrania. Po uruchomieniu wystarczy się zalogować, aby rozpocząć darmowy, 7-dniowy okres próbny.
+              Zacznij od darmowego 7-dniowego okresu próbnego.
+              Bez podawania karty kredytowej.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
-              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-              <a
-                href="/api/download?platform=mac"
+              <Link
+                href="/physionotes/download"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-medium text-base shadow-[0_4px_25px_rgba(16,185,129,0.3)] hover:scale-[1.02] transition-all duration-200"
               >
                 <Download className="h-5 w-5" />
-                <span>Pobierz dla macOS</span>
-              </a>
-              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-              <a
-                href="/api/download?platform=win"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-white dark:bg-neutral-900 text-[#111111] dark:text-white border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 font-medium text-base shadow-sm hover:scale-[1.02] transition-all duration-200"
-              >
-                <Download className="h-5 w-5 opacity-70" />
-                <span>Pobierz dla Windows</span>
-              </a>
+                <span>Pobierz za darmo</span>
+              </Link>
             </div>
             <p className="mt-6 text-xs text-neutral-500">
-              Wymaga macOS 12+ (Apple Silicon / Intel) lub Windows 10/11.
+              Dostępne na macOS oraz Windows.
             </p>
           </div>
         </section>

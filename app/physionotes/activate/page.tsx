@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useUser, SignInButton, SignUpButton } from '@clerk/nextjs';
 import Link from 'next/link';
-import { ArrowRight, Check, Copy, Loader2, AlertTriangle, Monitor } from 'lucide-react';
+import { ArrowRight, Check, Copy, Loader2, AlertTriangle, Monitor, Download } from 'lucide-react';
 
 type ActivationState = 'loading' | 'activating' | 'success' | 'expired' | 'error';
 
@@ -255,43 +255,12 @@ export default function PhysioNotesActivatePage() {
 
   // ── Not signed in ──
   if (isLoaded && !isSignedIn) {
+    if (typeof window !== 'undefined') {
+      window.location.href = '/login?redirect_url=/physionotes/activate';
+    }
     return (
       <div className="min-h-screen bg-white dark:bg-[#111111] flex items-center justify-center px-4">
-        <div className="w-full max-w-md text-center space-y-8">
-          <div>
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
-              <span className="font-semibold text-lg tracking-tight text-[#111111] dark:text-white">
-                PhysioNotes <span className="text-emerald-600 dark:text-emerald-400 font-medium">V2.0</span>
-              </span>
-            </div>
-            <h1 className="text-2xl font-bold text-[#111111] dark:text-white">
-              Aktywuj aplikację desktopową
-            </h1>
-            <p className="mt-2 text-neutral-600 dark:text-neutral-400 text-sm">
-              Zaloguj się lub utwórz konto, aby aktywować PhysioNotes na swoim komputerze.
-            </p>
-          </div>
-
-          <div className="space-y-3">
-            <SignInButton mode="modal" forceRedirectUrl="/physionotes/activate">
-              <button className="w-full py-3.5 px-4 bg-[#111111] dark:bg-white text-white dark:text-[#111111] rounded-xl text-sm font-semibold shadow-sm hover:opacity-90 transition flex items-center justify-center gap-2">
-                Zaloguj się
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </SignInButton>
-
-            <SignUpButton mode="modal" forceRedirectUrl="/physionotes/activate">
-              <button className="w-full py-3.5 px-4 bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-200 rounded-xl text-sm font-semibold hover:bg-neutral-200 dark:hover:bg-neutral-700 transition">
-                Załóż nowe konto (7 dni za darmo)
-              </button>
-            </SignUpButton>
-          </div>
-
-          <Link href="/physionotes" className="inline-block text-xs text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 transition">
-            ← Wróć na stronę PhysioNotes
-          </Link>
-        </div>
+        <Loader2 className="h-8 w-8 animate-spin text-emerald-500" />
       </div>
     );
   }
@@ -410,8 +379,29 @@ export default function PhysioNotesActivatePage() {
           )}
         </div>
 
-        <Link href="/physionotes" className="inline-block text-xs text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 transition">
-          ← Wróć na stronę PhysioNotes
+        {/* ── SEKCJA POBIERANIA INSTALATORA ── */}
+        <div className="mt-8 pt-8 border-t border-neutral-100 dark:border-neutral-800/80">
+          <div className="flex flex-col items-center gap-3">
+            <h3 className="text-sm font-medium text-[#111111] dark:text-white flex items-center gap-2">
+              <Download className="h-4 w-4 text-emerald-500" />
+              Nie masz jeszcze aplikacji?
+            </h3>
+            <p className="text-xs text-neutral-500 max-w-sm">
+              Zainstaluj PhysioNotes na swoim komputerze, by móc z niej korzystać i wkleić kod aktywacyjny.
+            </p>
+            <div className="flex justify-center mt-2">
+              <Link 
+                href="/physionotes/download"
+                className="px-6 py-3 rounded-xl bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white text-sm font-semibold transition flex items-center gap-2"
+              >
+                Przejdź do pobierania instalatora
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <Link href="/physionotes/account" className="inline-block text-xs text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 transition mt-6">
+          ← Przejdź do konta
         </Link>
       </div>
     </div>

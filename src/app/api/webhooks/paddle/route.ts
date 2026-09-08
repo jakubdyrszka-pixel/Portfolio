@@ -88,8 +88,9 @@ export async function POST(request: Request) {
           await prisma.license.updateMany({
             where: { userId },
             data: {
-              paddleCustomerId: customerId,
-              paddleSubscriptionId: subscriptionId,
+              paymentProvider: 'PADDLE',
+              providerCustomerId: customerId,
+              providerSubscriptionId: subscriptionId,
               status: newStatus,
               tier,
               expiresAt,
@@ -105,7 +106,7 @@ export async function POST(request: Request) {
           const subscriptionId = subscription.id;
 
           await prisma.license.updateMany({
-            where: { paddleSubscriptionId: subscriptionId },
+            where: { providerSubscriptionId: subscriptionId },
             data: {
               status: 'CANCELLED',
             },
