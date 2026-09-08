@@ -76,11 +76,11 @@ export default function PhysioNotesPage() {
           <PhysioNotesShowcase />
         </div>
 
-        {/* 4. Jak działa (3 kroki) */}
-        <PhysioNotesWorkflow />
-
-        {/* 5. Cennik */}
+        {/* 4. Cennik */}
         <PhysioNotesPricing />
+
+        {/* 5. Jak działa (3 kroki) */}
+        <PhysioNotesWorkflow />
 
         {/* 6. FAQ */}
         <PhysioNotesFAQ />

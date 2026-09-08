@@ -28,10 +28,24 @@ export function PhysioNotesPricing() {
       priceId: isYearly ? 'pri_01m1xpxgr7hb51sj2g4yamkdgz' : 'pri_01m1xpwrk0p57ff3cetavx334w',
       features: ['Bez limitu pacjentów', 'Baza wiedzy ICD-10', 'Synchronizacja wielu urządzeń', 'Priorytetowe wsparcie'],
       recommended: true,
+    },
+    {
+      name: 'Klinika',
+      description: 'Dla większych placówek z zespołem fizjoterapeutów.',
+      price: 'Indywidualna',
+      period: '',
+      priceId: 'contact',
+      features: ['Wiele kont dla personelu', 'Współdzielona baza pacjentów', 'Zaawansowane statystyki', 'Dedykowany opiekun'],
+      recommended: false,
     }
   ];
 
   const handleCheckout = async (priceId: string) => {
+    if (priceId === 'contact') {
+      window.location.href = 'mailto:kontakt@physionotes.com?subject=Zapytanie o plan Klinika';
+      return;
+    }
+    
     if (!isLoaded) return;
     
     // Wymuszenie logowania przed płatnością na stronie głównej
@@ -67,7 +81,7 @@ export function PhysioNotesPricing() {
 
   return (
     <section id="pricing" className="py-20 sm:py-28 border-t border-neutral-200/60 dark:border-neutral-800/60 bg-[#fafafa] dark:bg-[#111111]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-16">
           <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
             Przejrzysty Cennik
@@ -93,9 +107,9 @@ export function PhysioNotesPricing() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {plans.map((plan) => (
-            <div key={plan.name} className={`relative p-8 rounded-3xl border transition-all hover:-translate-y-1 hover:shadow-2xl ${plan.recommended ? 'border-emerald-500 shadow-xl shadow-emerald-500/10 bg-white dark:bg-[#161616]' : 'border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#111111]'}`}>
+            <div key={plan.name} className={`relative p-8 rounded-3xl border transition-all hover:-translate-y-1 hover:shadow-2xl flex flex-col ${plan.recommended ? 'border-emerald-500 shadow-xl shadow-emerald-500/10 bg-white dark:bg-[#161616] scale-105 z-10' : 'border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#111111]'}`}>
               {plan.recommended && (
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 bg-emerald-500 text-white text-[11px] font-bold uppercase tracking-widest rounded-full shadow-sm">
                   Najpopularniejszy
@@ -106,11 +120,17 @@ export function PhysioNotesPricing() {
               <p className="mt-2 text-sm text-neutral-500 min-h-[40px]">{plan.description}</p>
               
               <div className="mt-6 flex items-baseline gap-1">
-                <span className="text-5xl font-black tracking-tight text-[#111111] dark:text-white">{plan.price}</span>
-                <span className="text-sm font-medium text-neutral-500">{plan.period}</span>
+                {plan.price === 'Indywidualna' ? (
+                  <span className="text-3xl font-black tracking-tight text-[#111111] dark:text-white mt-3 mb-1.5">{plan.price}</span>
+                ) : (
+                  <>
+                    <span className="text-5xl font-black tracking-tight text-[#111111] dark:text-white">{plan.price}</span>
+                    <span className="text-sm font-medium text-neutral-500">{plan.period}</span>
+                  </>
+                )}
               </div>
               
-              <ul className="mt-8 space-y-4 mb-10">
+              <ul className="mt-8 space-y-4 mb-10 flex-grow">
                 {plan.features.map(feat => (
                   <li key={feat} className="flex items-start gap-3 text-sm text-neutral-600 dark:text-neutral-300 font-medium">
                     <Check className="h-5 w-5 shrink-0 text-emerald-500" />
@@ -121,10 +141,10 @@ export function PhysioNotesPricing() {
               
               <button
                 onClick={() => handleCheckout(plan.priceId)}
-                disabled={isCheckingOut}
-                className={`w-full py-4 px-4 rounded-xl text-sm font-bold tracking-wide transition-all ${plan.recommended ? 'bg-emerald-500 hover:bg-emerald-400 text-white shadow-lg shadow-emerald-500/25' : 'bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-[#111111] dark:text-white'}`}
+                disabled={isCheckingOut && plan.priceId !== 'contact'}
+                className={`w-full py-4 px-4 rounded-xl text-sm font-bold tracking-wide transition-all mt-auto ${plan.recommended ? 'bg-emerald-500 hover:bg-emerald-400 text-white shadow-lg shadow-emerald-500/25' : 'bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-[#111111] dark:text-white'}`}
               >
-                {isCheckingOut ? 'Otwieranie bramki...' : (isSignedIn ? `Wybierz ${plan.name}` : 'Wypróbuj 7 dni za darmo')}
+                {isCheckingOut && plan.priceId !== 'contact' ? 'Otwieranie bramki...' : (plan.priceId === 'contact' ? 'Skontaktuj się' : (isSignedIn ? `Wybierz ${plan.name}` : 'Wypróbuj 7 dni za darmo'))}
               </button>
             </div>
           ))}
