@@ -42,7 +42,7 @@ export function PhysioNotesHero() {
             href="#pricing"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-base shadow-[0_4px_25px_rgba(16,185,129,0.25)] hover:shadow-[0_6px_30px_rgba(16,185,129,0.35)] transition-all duration-200 hover:scale-[1.02]"
           >
-            <span>Wypróbuj za darmo</span>
+            <span>Sprawdź teraz</span>
             <ArrowRight className="h-4 w-4" />
           </a>
 
