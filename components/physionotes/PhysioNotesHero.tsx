@@ -14,22 +14,26 @@ export function PhysioNotesHero() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-neutral-200/80 dark:border-neutral-800 bg-white/70 dark:bg-neutral-900/70 backdrop-blur-md shadow-sm text-xs sm:text-sm font-medium text-neutral-800 dark:text-neutral-200 mb-8 transition duration-300 hover:border-neutral-300 dark:hover:border-neutral-700">
           <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Nowoczesna Elektroniczna Dokumentacja Medyczna</span>
+          <span>7 dni bezpłatnie</span>
+          <span className="text-neutral-300 dark:text-neutral-700">|</span>
+          <span className="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+            macOS & Windows
+          </span>
           <span className="text-neutral-300 dark:text-neutral-700">|</span>
           <span className="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
             <ShieldCheck className="h-3.5 w-3.5" />
-            Zero-Cloud
+            bez karty
           </span>
         </div>
 
         {/* Strong Headline (56-72 px) */}
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-[#111111] dark:text-white sm:leading-[1.08] max-w-4xl mx-auto">
-          Szybsza dokumentacja. Więcej czasu dla pacjentów.
+          Dokumentacja fizjoterapeutyczna w mniej niż minutę.
         </h1>
 
         {/* One sentence explaining the product (18 px) */}
         <p className="mt-6 text-base sm:text-lg lg:text-xl text-neutral-600 dark:text-neutral-400 font-normal leading-relaxed max-w-2xl mx-auto">
-          Nowoczesna aplikacja desktopowa dla fizjoterapeutów z lokalną bazą danych, pełną prywatnością pacjentów i natychmiastową responsywnością. Dane są zabezpieczone szyfrowaniem AES-256-GCM.
+          Twórz kompletne notatki SOAP, korzystaj z gotowych szablonów i miej całą historię pacjenta pod ręką. Bez chmury. Bez zbędnej konfiguracji.
         </p>
 
         {/* Two CTAs */}
@@ -38,7 +42,7 @@ export function PhysioNotesHero() {
             href="#pricing"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-base shadow-[0_4px_25px_rgba(16,185,129,0.25)] hover:shadow-[0_6px_30px_rgba(16,185,129,0.35)] transition-all duration-200 hover:scale-[1.02]"
           >
-            <span>Wybierz plan</span>
+            <span>Wypróbuj za darmo</span>
             <ArrowRight className="h-4 w-4" />
           </a>
 
@@ -55,15 +59,15 @@ export function PhysioNotesHero() {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-neutral-500 dark:text-neutral-400 font-medium">
           <span className="flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            macOS (Apple Silicon M1–M4 &amp; Intel)
+            Lokalna baza pacjentów
           </span>
           <span className="flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            Windows 10 / 11 (64-bit)
+            Gotowe szablony
           </span>
           <span className="flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            Szyfrowanie AES-256-GCM
+            Eksport PDF
           </span>
         </div>
       </div>

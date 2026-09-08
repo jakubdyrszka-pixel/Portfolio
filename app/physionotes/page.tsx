@@ -58,7 +58,7 @@ export default function PhysioNotesPage() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#111111] dark:bg-white text-white dark:text-[#111111] hover:bg-neutral-800 dark:hover:bg-neutral-100 text-xs sm:text-sm font-medium shadow-sm transition-all duration-200"
             >
               <ArrowRight className="h-3.5 w-3.5 text-emerald-400 dark:text-emerald-600" />
-              <span>Wybierz plan</span>
+              <span>Pobierz teraz</span>
             </a>
           </div>
         </div>

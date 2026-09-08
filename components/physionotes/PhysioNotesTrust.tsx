@@ -13,31 +13,31 @@ interface TrustCard {
 const trustCards: TrustCard[] = [
   {
     icon: ShieldCheck,
-    badge: "Architektura Zero-Cloud",
-    title: "100% Prywatności i Kontroli nad Danymi",
+    badge: "Brak zewnetrznych serwerów",
+    title: "Pełna kontrola nad danymi",
     description:
-      "Całkowita niezależność od infrastruktury chmurowej. Kartoteki pacjentów, historia kliniczna oraz biblioteki szablonów są przechowywane wyłącznie na lokalnym dysku stacji roboczej, co eliminuje ryzyko wycieku z zewnętrznych serwerów.",
+      "Aplikacja działa w oparciu o lokalną bazę danych. Dokumentacja pacjentów znajduje się wyłącznie na Twoim dysku, co minimalizuje ryzyko wycieku z zewnętrznej chmury.",
   },
   {
     icon: Lock,
-    badge: "Szyfrowanie sprzętowe",
-    title: "Standard AES-256-GCM & Zero-Knowledge",
+    badge: "Szyfrowanie",
+    title: "Zabezpieczony dostęp",
     description:
-      "Klucz kryptograficzny zabezpieczający bazę danych SQLite wywodzi się bezpośrednio z Twojego prywatnego kodu PIN i jest chroniony w systemie Apple Keychain lub Windows Credential Locker. Pełna poufność kliniczna.",
+      "Baza pacjentów jest szyfrowana w standardzie AES-256. Nawet jeśli ktoś uzyska fizyczny dostęp do pliku bazy, nie odczyta jej zawartości bez Twojego kodu PIN.",
   },
   {
     icon: WifiOff,
-    badge: "Zgodność z RODO (ADO)",
-    title: "Praca bez umów powierzenia (DPA)",
+    badge: "Offline-first",
+    title: "Prywatność i niezawodność",
     description:
-      "Jako Administrator Danych Osobowych (ADO) nie powierzasz przetwarzania wrażliwych danych medycznych podmiotom zewnętrznym. Zwalnia to praktykę z procedur audytowych oraz konieczności podpisywania umów DPA.",
+      "Nie potrzebujesz ciągłego dostępu do internetu, aby przeprowadzić wizytę. Brak konieczności wysyłania kartotek na zewnątrz ułatwia też spełnienie Twoich obowiązków jako Administratora Danych Osobowych.",
   },
   {
     icon: FileCheck2,
-    badge: "Status prawny i regulacje",
-    title: "Natywne wyłączenie z dyrektywy MDR",
+    badge: "Zgodność z RODO",
+    title: "Łatwiejsze procedury",
     description:
-      "Zgodnie z oficjalnymi wytycznymi MDCG 2019-11 oprogramowanie dedykowane do prowadzenia Elektronicznej Dokumentacji Medycznej (EDM) bez zautomatyzowanej diagnozy nie stanowi wyrobu medycznego, gwarantując stabilność wdrożenia.",
+      "Ponieważ PhysioNotes nie przetwarza danych medycznych na zewnętrznych serwerach (SaaS), zazwyczaj nie musisz podpisywać z nami dodatkowych umów powierzenia przetwarzania danych osobowych.",
   },
 ];
 
@@ -48,13 +48,13 @@ export function PhysioNotesTrust() {
         {/* Section Header */}
         <div className="max-w-3xl">
           <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-            Standardy Bezpieczeństwa Klinicznego
+            Prywatność Twoich Pacjentów
           </span>
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-[44px] font-semibold tracking-tight text-[#111111] dark:text-white leading-tight">
-            Prywatność by Design. Pełna kontrola nad dokumentacją pacjentów.
+            Prywatność nie powinna zaczynać się dopiero wtedy, gdy wydarzy się coś złego.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-neutral-600 dark:text-neutral-400 font-normal leading-relaxed">
-            W odróżnieniu od rozproszonych systemów chmurowych, PhysioNotes łączy bezkompromisową wydajność aplikacji natywnej z pełną zgodnością prawną i kryptograficzną ochroną wrażliwych danych zdrowotnych.
+            Ostatnie wydarzenia przypomniały całej branży jedną rzecz: dane pacjentów nie powinny być traktowane jak zwykłe dane użytkowników. Dlatego prywatność w PhysioNotes nie jest dodatkiem. Jest fundamentem – aplikację projektujemy tak, aby dokumentacja Twoich pacjentów była chroniona od samego początku.
           </p>
         </div>
 
@@ -90,7 +90,7 @@ export function PhysioNotesTrust() {
 
                 <div className="mt-8 pt-4 border-t border-neutral-100 dark:border-neutral-800/60 flex items-center gap-2 text-xs font-medium text-neutral-500 dark:text-neutral-400">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  <span>Pełna zgodność z RODO i standardami EDM</span>
+                  <span>Działa całkowicie offline</span>
                 </div>
               </div>
             );

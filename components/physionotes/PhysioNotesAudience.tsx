@@ -24,17 +24,17 @@ export function PhysioNotesAudience() {
               <Stethoscope className="h-6 w-6" />
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-[#111111] dark:text-white mb-3">
-              Indywidualne Praktyki Fizjoterapeutyczne
+              Pracujesz sam?
             </h3>
             <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal mb-6">
-              Dla terapeutów pracujących samodzielnie, potrzebujących błyskawicznego systemu EDM, który nie obciąża ich miesięcznego budżetu i gwarantuje bezpieczeństwo danych (Brak umów powierzenia RODO).
+              Dokumentacja bez serwerów, konfiguracji i abonamentu za każdego pacjenta.
             </p>
             <ul className="space-y-3 mb-8">
               <li className="flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-300">
                 <span className="text-emerald-500 font-bold">✓</span> Wywiad w 60 sekund
               </li>
               <li className="flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-300">
-                <span className="text-emerald-500 font-bold">✓</span> Gotowe kody ICD-10
+                <span className="text-emerald-500 font-bold">✓</span> Gotowe szablony i kody ICD-10
               </li>
             </ul>
           </div>
@@ -45,17 +45,17 @@ export function PhysioNotesAudience() {
               <Building2 className="h-6 w-6" />
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-[#111111] dark:text-white mb-3">
-              Kliniki i Zespoły Fizjoterapeutów
+              Prowadzisz klinikę?
             </h3>
             <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal mb-6">
-              Dla placówek z wieloma gabinetami, które chcą ujednolicić standard dokumentacji (SOAP) i współdzielić wiedzę kliniczną dzięki synchronizacji.
+              Ustandaryzuj dokumentację całego zespołu i przyspiesz pracę administracyjną.
             </p>
             <ul className="space-y-3 mb-8">
               <li className="flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-300">
-                <span className="text-emerald-500 font-bold">✓</span> Standardy wizyty
+                <span className="text-emerald-500 font-bold">✓</span> Wspólne standardy wizyt (SOAP)
               </li>
               <li className="flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-300">
-                <span className="text-emerald-500 font-bold">✓</span> Współdzielona baza pacjentów
+                <span className="text-emerald-500 font-bold">✓</span> Spójna dokumentacja w PDF
               </li>
             </ul>
           </div>

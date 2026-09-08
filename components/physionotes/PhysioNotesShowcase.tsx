@@ -125,8 +125,13 @@ export function PhysioNotesShowcase() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="max-w-3xl mb-12">
             <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-              Główny Moduł Kliniczny
+              Oszczędność Czasu
             </span>
+            <div className="my-6 flex items-center gap-4 text-4xl sm:text-6xl font-bold tracking-tight">
+              <span className="text-neutral-400 line-through">10 minut</span>
+              <span className="text-emerald-500">→</span>
+              <span className="text-[#111111] dark:text-white">60 sekund</span>
+            </div>
             <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#111111] dark:text-white leading-tight">
               {mainFeature.title}
             </h2>

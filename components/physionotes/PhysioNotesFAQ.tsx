@@ -16,42 +16,42 @@ const faqItems: FAQItem[] = [
     icon: Lock,
     question: "W jaki sposób chronione są dane pacjentów i co w przypadku zapomnienia kodu PIN?",
     answer:
-      "PhysioNotes działa w paradygmacie Zero-Knowledge. Klucz kryptograficzny zabezpieczający bazę danych AES-256-GCM wywodzi się bezpośrednio z Twojego prywatnego kodu PIN. Twórcy oprogramowania nie posiadają do niego dostępu ani nie przechowują go w infrastrukturze chmurowej. W przypadku utraty kodu PIN odzyskanie kartoteki jest możliwe wyłącznie ze zrzutu kopii zapasowej (Backup JSON). System posiada wbudowane mechanizmy cyklicznego przypominania o archiwizacji lokalnej."
+      "Baza pacjentów jest zaszyfrowana algorytmem AES-256. Jako twórcy aplikacji nie mamy do niej żadnego dostępu. Jeśli zapomnisz kodu PIN, aplikacja uniemożliwi odczytanie danych. Możesz jednak zawsze przywrócić kartotekę z wykonanej wcześniej kopii zapasowej na dysku. System będzie Ci o tym regularnie przypominał."
   },
   {
     category: "Praca Offline & Sieć",
     icon: WifiOff,
     question: "Czy aplikacja wymaga stałego dostępu do Internetu podczas pracy z pacjentem?",
     answer:
-      "Nie. Cały cykl przetwarzania danych – od przeszukiwania kartotek po generowanie wywiadów SOAP i eksport plików PDF – odbywa się w 100% lokalnie w architekturze Offline-First. Połączenie internetowe jest wymagane wyłącznie podczas autoryzacji licencji stacji roboczej oraz weryfikacji dostępności aktualizacji oprogramowania."
+      "Nie. Cały program – łącznie z wyszukiwarką, szablonami i generowaniem PDF – działa w 100% offline. Internet jest potrzebny tylko sporadycznie, na przykład do weryfikacji licencji lub pobrania aktualizacji."
   },
   {
     category: "Migracja & Import Danych",
     icon: FileSpreadsheet,
     question: "Czy możliwe jest wczytanie dotychczasowej bazy pacjentów z arkuszy kalkulacyjnych?",
     answer:
-      "Tak. W sekcji 'Synchronizacja -> Import' możesz wczytać kartotekę z pliku w formacie CSV. Jeżeli dotychczas prowadziłeś rejestr wizyt w arkuszu Excel lub zewnętrznym systemie medycznym, wystarczy wyeksportować dane do pliku CSV z kolumnami (Imię, Nazwisko, PESEL, Telefon), aby zaimplementować je do lokalnej bazy PhysioNotes."
+      "Tak. Z poziomu aplikacji możesz łatwo zaimportować listę pacjentów z pliku CSV (np. wyeksportowanego z Excela). Jeśli masz dużą bazę danych w innym formacie i potrzebujesz pomocy przy imporcie, nasz zespół techniczny może Cię w tym wesprzeć."
   },
   {
     category: "Wymagania Sprzętowe",
     icon: Laptop,
     question: "Z jakimi systemami operacyjnymi jest kompatybilny PhysioNotes?",
     answer:
-      "Aplikacja jest w pełni zoptymalizowana pod systemy macOS (wersja uniwersalna dla architektury Apple Silicon M1–M4 oraz procesorów Intel) oraz Windows 10 i Windows 11 (wersja 64-bitowa). Dzięki zastosowaniu natywnego silnika bazy danych SQLite aplikacja wykazuje natychmiastową responsywność również na starszych stacjach roboczych."
+      "Program zadziała płynnie zarówno na komputerach Mac (Apple Silicon oraz Intel), jak i na komputerach z systemem Windows 10 lub 11."
   },
   {
     category: "Model Licencyjny & Chmura",
     icon: HardDrive,
-    question: "Dlaczego oprogramowanie nie wymaga opłat za liczbę pacjentów ani subskrypcji chmurowych?",
+    question: "Dlaczego oprogramowanie nie wymaga opłat za liczbę pacjentów ani drogich abonamentów?",
     answer:
-      "Tradycyjne systemy medyczne obciążają praktyki wysokimi kosztami utrzymania rozproszonych serwerów chmurowych. PhysioNotes opiera się na architekturze Local-First – dane kliniczne spoczywają wyłącznie na dysku Twojego urządzenia. Eliminacja kosztów serwerowych umożliwia oferowanie licencji bez limitu kartotek i bez ryzyka wycieku z zewnętrznych centrów danych."
+      "Większość systemów medycznych utrzymuje ogromne, kosztowne serwery chmurowe. PhysioNotes trzyma dane u Ciebie na dysku. Ponieważ nie płacimy za utrzymywanie Twoich danych w zewnętrznej chmurze, nie musimy przerzucać tego kosztu na Ciebie. Dlatego możemy zaoferować bardzo przystępny i prosty model płatności."
   },
   {
-    category: "Zgodność Prawna (RODO & MDR)",
+    category: "Zgodność z RODO",
     icon: Shield,
-    question: "Czy wdrożenie programu wymaga podpisania umowy powierzenia danych osobowych (DPA)?",
+    question: "Czy korzystanie z programu wymaga podpisywania umowy powierzenia danych?",
     answer:
-      "Jako fizjoterapeuta pełnisz rolę Administratora Danych Osobowych (ADO). Ponieważ PhysioNotes nie przesyła kartotek medycznych na zewnętrzne serwery, nie dochodzi do powierzenia przetwarzania podmiotowi trzeciemu. Zwalnia to praktykę z obowiązku zawierania umów DPA. Ponadto oprogramowanie podlega wyłączeniu z klasyfikacji wyrobów medycznych (MDR 2017/745 / MDCG 2019-11) jako narzędzie do EDM bez zautomatyzowanej diagnozy."
+      "PhysioNotes nie jest usługą chmurową (SaaS) i nie przetwarza danych medycznych na swoich serwerach – wszystko zostaje na Twoim komputerze. Dzięki temu odpada konieczność podpisywania typowych dla chmury umów powierzenia przetwarzania danych osobowych. Znacznie upraszcza to kwestie prawne w Twoim gabinecie."
   }
 ];
 

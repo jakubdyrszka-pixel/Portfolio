@@ -14,19 +14,19 @@ export function PhysioNotesPricing() {
     {
       name: 'Starter',
       description: 'Idealny dla małych gabinetów i freelancerów.',
-      price: isYearly ? '$180' : '$17',
+      price: isYearly ? '490 zł' : '49 zł',
       period: isYearly ? '/ rocznie' : '/ mc',
       priceId: isYearly ? 'pri_01m1xpv6seqh7pgrfn7fnzwxd8' : 'pri_01m1xpt3fz6xydh9jgg9wyk3q8',
-      features: ['Do 5 pacjentów / tydzień', 'Pełen wywiad SOAP', 'Szyfrowanie AES-256', 'Eksport do PDF'],
+      features: ['Do 50 aktywnych pacjentów', 'Pełen wywiad SOAP', 'Działa offline', 'Eksport do PDF'],
       recommended: false,
     },
     {
       name: 'Pro',
       description: 'Pełen potencjał dla prężnie działających specjalistów.',
-      price: isYearly ? '$285' : '$27',
+      price: isYearly ? '790 zł' : '79 zł',
       period: isYearly ? '/ rocznie' : '/ mc',
       priceId: isYearly ? 'pri_01m1xpxgr7hb51sj2g4yamkdgz' : 'pri_01m1xpwrk0p57ff3cetavx334w',
-      features: ['Bez limitu pacjentów', 'Baza wiedzy ICD-10', 'Synchronizacja wielu urządzeń', 'Priorytetowe wsparcie'],
+      features: ['Bez limitu pacjentów', 'Baza wiedzy ICD-10 i szablony', 'Bezpieczna lokalna baza', 'Priorytetowe wsparcie'],
       recommended: true,
     },
     {
@@ -35,7 +35,7 @@ export function PhysioNotesPricing() {
       price: 'Indywidualna',
       period: '',
       priceId: 'contact',
-      features: ['Wiele kont dla personelu', 'Współdzielona baza pacjentów', 'Zaawansowane statystyki', 'Dedykowany opiekun'],
+      features: ['Wiele kont dla personelu', 'Ustandaryzowana dokumentacja', 'Zaawansowane statystyki', 'Dedykowany opiekun'],
       recommended: false,
     }
   ];
