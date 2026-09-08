@@ -8,7 +8,7 @@ import { PhysioNotesWorkflow } from "@/components/physionotes/PhysioNotesWorkflo
 import { PhysioNotesAudience } from "@/components/physionotes/PhysioNotesAudience";
 import { PhysioNotesPricing } from "@/components/physionotes/PhysioNotesPricing";
 import { PhysioNotesFAQ } from "@/components/physionotes/PhysioNotesFAQ";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "PhysioNotes V2.0 | Nowoczesna Elektroniczna Dokumentacja Medyczna",
@@ -34,6 +34,7 @@ export default function PhysioNotesPage() {
               <a href="#showcase" className="hover:text-[#111111] dark:hover:text-white transition">Możliwości</a>
               <a href="#pricing" className="hover:text-[#111111] dark:hover:text-white transition">Cennik</a>
               <a href="#faq" className="hover:text-[#111111] dark:hover:text-white transition">FAQ</a>
+              <Link href="/physionotes/download" className="hover:text-[#111111] dark:hover:text-white transition">Pobierz</Link>
             </nav>
           </div>
 
@@ -110,6 +111,13 @@ export default function PhysioNotesPage() {
                 <span>Sprawdź pakiety</span>
                 <ArrowRight className="h-5 w-5" />
               </a>
+              <Link
+                href="/physionotes/download"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl border border-neutral-200/80 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 text-[#111111] dark:text-white font-medium text-base shadow-sm hover:bg-neutral-50 dark:hover:bg-neutral-800/80 transition-all duration-200 hover:border-neutral-300 dark:hover:border-neutral-700"
+              >
+                <Download className="h-5 w-5 opacity-80" />
+                <span>Pobierz instalator</span>
+              </Link>
             </div>
             <p className="mt-6 text-xs text-neutral-500">
               Dostępne na macOS oraz Windows.
