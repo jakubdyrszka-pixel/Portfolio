@@ -51,7 +51,7 @@ export default async function AccountPage() {
             >
               Pobierz aplikację
             </Link>
-            <UserButton afterSignOutUrl="/physionotes" />
+            <UserButton />
           </div>
         </div>
       </header>
