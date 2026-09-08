@@ -5,9 +5,10 @@ import { PhysioNotesHero } from "@/components/physionotes/PhysioNotesHero";
 import { PhysioNotesTrust } from "@/components/physionotes/PhysioNotesTrust";
 import { PhysioNotesShowcase } from "@/components/physionotes/PhysioNotesShowcase";
 import { PhysioNotesWorkflow } from "@/components/physionotes/PhysioNotesWorkflow";
+import { PhysioNotesAudience } from "@/components/physionotes/PhysioNotesAudience";
 import { PhysioNotesPricing } from "@/components/physionotes/PhysioNotesPricing";
 import { PhysioNotesFAQ } from "@/components/physionotes/PhysioNotesFAQ";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "PhysioNotes V2.0 | Nowoczesna Elektroniczna Dokumentacja Medyczna",
@@ -33,7 +34,6 @@ export default function PhysioNotesPage() {
               <a href="#showcase" className="hover:text-[#111111] dark:hover:text-white transition">Możliwości</a>
               <a href="#pricing" className="hover:text-[#111111] dark:hover:text-white transition">Cennik</a>
               <a href="#faq" className="hover:text-[#111111] dark:hover:text-white transition">FAQ</a>
-              <a href="#download" className="hover:text-[#111111] dark:hover:text-white transition">Pobierz</a>
             </nav>
           </div>
 
@@ -52,13 +52,13 @@ export default function PhysioNotesPage() {
               Zaloguj się
             </Link>
 
-            <Link
-              href="/physionotes/download"
+            <a
+              href="#pricing"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#111111] dark:bg-white text-white dark:text-[#111111] hover:bg-neutral-800 dark:hover:bg-neutral-100 text-xs sm:text-sm font-medium shadow-sm transition-all duration-200"
             >
-              <Download className="h-3.5 w-3.5 text-emerald-400 dark:text-emerald-600" />
-              <span>Pobierz za darmo</span>
-            </Link>
+              <ArrowRight className="h-3.5 w-3.5 text-emerald-400 dark:text-emerald-600" />
+              <span>Wybierz plan</span>
+            </a>
           </div>
         </div>
       </header>
@@ -76,13 +76,16 @@ export default function PhysioNotesPage() {
           <PhysioNotesShowcase />
         </div>
 
-        {/* 4. Cennik */}
-        <PhysioNotesPricing />
-
-        {/* 5. Jak działa (3 kroki) */}
+        {/* 4. Jak działa (3 kroki) */}
         <PhysioNotesWorkflow />
 
-        {/* 6. FAQ */}
+        {/* 5. Dla kogo */}
+        <PhysioNotesAudience />
+
+        {/* 6. Cennik */}
+        <PhysioNotesPricing />
+
+        {/* 7. FAQ */}
         <PhysioNotesFAQ />
 
         {/* 7. Bottom CTA Banner (Download Section) */}
@@ -100,13 +103,13 @@ export default function PhysioNotesPage() {
               Bez podawania karty kredytowej.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
-              <Link
-                href="/physionotes/download"
+              <a
+                href="#pricing"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-medium text-base shadow-[0_4px_25px_rgba(16,185,129,0.3)] hover:scale-[1.02] transition-all duration-200"
               >
-                <Download className="h-5 w-5" />
-                <span>Pobierz za darmo</span>
-              </Link>
+                <span>Sprawdź pakiety</span>
+                <ArrowRight className="h-5 w-5" />
+              </a>
             </div>
             <p className="mt-6 text-xs text-neutral-500">
               Dostępne na macOS oraz Windows.

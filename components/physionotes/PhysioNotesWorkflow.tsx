@@ -57,6 +57,15 @@ export function PhysioNotesWorkflow() {
           <p className="mt-4 text-base sm:text-lg text-neutral-600 dark:text-neutral-400 font-normal leading-relaxed">
             Eliminacja wielogodzinnych szkoleń, skomplikowanych wdrożeń IT oraz zależności od dostawców chmurowych. PhysioNotes jest gotowy do pracy klinicznej natychmiast po instalacji na stacji roboczej.
           </p>
+          <div className="mt-8">
+            <a
+              href="#pricing"
+              className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm hover:opacity-80 transition-opacity"
+            >
+              <span>Wybierz swój plan</span>
+              <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
         </div>
 
         {/* 3 Storytelling Steps Grid */}

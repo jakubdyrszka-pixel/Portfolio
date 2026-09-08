@@ -34,21 +34,20 @@ export function PhysioNotesHero() {
 
         {/* Two CTAs */}
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
-            href="/physionotes/download"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#111111] font-medium text-base shadow-[0_4px_25px_rgba(16,185,129,0.25)] hover:shadow-[0_6px_30px_rgba(16,185,129,0.35)] transition-all duration-200 hover:scale-[1.02]"
+          <a
+            href="#pricing"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-base shadow-[0_4px_25px_rgba(16,185,129,0.25)] hover:shadow-[0_6px_30px_rgba(16,185,129,0.35)] transition-all duration-200 hover:scale-[1.02]"
           >
-            <Download className="h-5 w-5" />
-            <span>Pobierz za darmo</span>
-            <ArrowRight className="h-4 w-4 opacity-80" />
-          </Link>
+            <span>Wybierz plan</span>
+            <ArrowRight className="h-4 w-4" />
+          </a>
 
           <a
             href="#showcase"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl border border-neutral-200/80 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 text-[#111111] dark:text-white font-medium text-base shadow-sm hover:bg-neutral-50 dark:hover:bg-neutral-800/80 transition-all duration-200 hover:border-neutral-300 dark:hover:border-neutral-700"
           >
             <Sparkles className="h-4.5 w-4.5 text-emerald-500" />
-            <span>Architektura kliniczna</span>
+            <span>Poznaj możliwości</span>
           </a>
         </div>
 
