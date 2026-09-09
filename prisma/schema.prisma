@@ -50,6 +50,7 @@ enum PaymentProvider {
   NONE
   PADDLE
   TPAY
+  HOTPAY
 }
 
 model License {

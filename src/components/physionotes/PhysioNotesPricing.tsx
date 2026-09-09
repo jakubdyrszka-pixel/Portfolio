@@ -56,24 +56,25 @@ export function PhysioNotesPricing() {
 
     setIsCheckingOut(true);
     try {
-      const { initializePaddle } = await import('@paddle/paddle-js');
-      const paddle = await initializePaddle({
-        environment: 'production',
-        token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || '',
+      const response = await fetch('/api/hotpay/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          priceId,
+          email: user?.primaryEmailAddress?.emailAddress || '',
+          userId: user?.id || ''
+        })
       });
-
-      if (paddle) {
-        paddle.Checkout.open({
-          items: [{ priceId, quantity: 1 }],
-          customer: { email: user?.primaryEmailAddress?.emailAddress || '' },
-          customData: { userId: user?.id || '' },
-          settings: {
-            successUrl: window.location.origin + '/physionotes/activate',
-          }
-        });
+      
+      const data = await response.json();
+      
+      if (data.redirectUrl) {
+        window.location.href = data.redirectUrl;
+      } else {
+        console.error('Missing redirectUrl from HotPay checkout API');
       }
     } catch (error) {
-      console.error('Paddle error:', error);
+      console.error('HotPay checkout error:', error);
     } finally {
       setIsCheckingOut(false);
     }
