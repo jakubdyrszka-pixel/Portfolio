@@ -218,6 +218,9 @@ export default function PhysioNotesActivatePage() {
           token: data.license.signedProof,
           email: data.user.email,
           userId: data.user.id,
+          tier: data.license.tier,
+          status: data.license.status,
+          expiresAt: data.license.expiresAt,
         });
         const deepLinkUrl = `physionotes://activate?${params.toString()}`;
         window.location.href = deepLinkUrl;
