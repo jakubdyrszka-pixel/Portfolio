@@ -17,7 +17,7 @@ export function PhysioNotesPricing() {
       price: isYearly ? '490 zł' : '49 zł',
       period: isYearly ? '/ rocznie' : '/ mc',
       priceId: isYearly ? 'pri_01m1xpv6seqh7pgrfn7fnzwxd8' : 'pri_01m1xpt3fz6xydh9jgg9wyk3q8',
-      features: ['Do 50 aktywnych pacjentów', 'Pełen wywiad SOAP', 'Działa offline', 'Eksport do PDF'],
+      features: ['Do 20 pacjentów tygodniowo', 'Wizyty bez limitu', 'Pełen wywiad SOAP & offline', 'Eksport do PDF'],
       recommended: false,
     },
     {
@@ -26,7 +26,7 @@ export function PhysioNotesPricing() {
       price: isYearly ? '790 zł' : '79 zł',
       period: isYearly ? '/ rocznie' : '/ mc',
       priceId: isYearly ? 'pri_01m1xpxgr7hb51sj2g4yamkdgz' : 'pri_01m1xpwrk0p57ff3cetavx334w',
-      features: ['Bez limitu pacjentów', 'Baza wiedzy ICD-10 i szablony', 'Bezpieczna lokalna baza', 'Priorytetowe wsparcie'],
+      features: ['Bez limitu pacjentów', 'Wizyty bez limitu', 'Baza wiedzy ICD-10 i szablony', 'Automatyczne kopie zapasowe'],
       recommended: true,
     },
     {
