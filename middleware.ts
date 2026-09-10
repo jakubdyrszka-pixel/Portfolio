@@ -18,6 +18,8 @@ const isPublicRoute = createRouteMatcher([
   "/api/license(.*)",
   "/api/devices",
   "/api/devices(.*)",
+  "/api/desktop",
+  "/api/desktop(.*)",
   "/api/webhooks/paddle(.*)",
   "/api/webhooks/tpay(.*)",
   "/api/activate"
