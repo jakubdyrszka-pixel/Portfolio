@@ -46,7 +46,7 @@ const termsSections = {
         icon: <Laptop className="h-6 w-6 text-ink" />,
         title: "5. Regulamin Świadczenia Usług Drogą Elektroniczną i Reklamacje",
         body: `Na podstawie art. 8 Ustawy o świadczeniu usług drogą elektroniczną (UŚUDE):
-• Usługodawca: Jakub Dyrszka (jakub.dyrszka@gmail.com).
+• Usługodawca / Sprzedawca: Jakub Dyrszka, ul. Szuwarków 24, 43-100 Tychy (e-mail: jakub.dyrszka@gmail.com).
 • Wymagania techniczne: Do korzystania z portalu i aktywacji licencji wymagane jest połączenie z Internetem oraz przeglądarka lub system operacyjny obsługujący szyfrowanie HTTPS/TLS.
 • Postępowanie reklamacyjne: Wszelkie reklamacje dotyczące działania portalu, aktywacji kluczy licencyjnych lub błędów oprogramowania należy zgłaszać na adres e-mail: jakub.dyrszka@gmail.com. Reklamacje są rozpatrywane w terminie do 14 dni roboczych od daty zgłoszenia.`
       },
@@ -102,7 +102,7 @@ const termsSections = {
         icon: <Laptop className="h-6 w-6 text-ink" />,
         title: "5. Electronic Services Terms & Complaint Procedure",
         body: `Under Polish Electronic Services Law (UŚUDE):
-• Service Provider: Jakub Dyrszka (jakub.dyrszka@gmail.com).
+• Service Provider / Seller: Jakub Dyrszka, ul. Szuwarków 24, 43-100 Tychy, Poland (e-mail: jakub.dyrszka@gmail.com).
 • Technical Requirements: Internet access and an HTTPS-compatible system are required for license activation.
 • Complaint Procedure: Any claims or technical issues regarding portal operation or license activation should be submitted via email to jakub.dyrszka@gmail.com. Complaints are reviewed and answered within 14 business days.`
       },
