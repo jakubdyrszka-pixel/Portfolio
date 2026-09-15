@@ -8,12 +8,22 @@ import { PhysioNotesWorkflow } from "@/components/physionotes/PhysioNotesWorkflo
 import { PhysioNotesAudience } from "@/components/physionotes/PhysioNotesAudience";
 import { PhysioNotesPricing } from "@/components/physionotes/PhysioNotesPricing";
 import { PhysioNotesFAQ } from "@/components/physionotes/PhysioNotesFAQ";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, CreditCard } from "lucide-react";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
-  title: "PhysioNotes V2.0 | Nowoczesna Elektroniczna Dokumentacja Medyczna",
+  title: "PhysioNotes V2.0 | Dokumentacja Gabinetowa SOAP dla Fizjoterapeutów",
   description:
-    "Nowoczesna, natywna aplikacja desktopowa dla fizjoterapeutów z lokalnym szyfrowaniem bazy danych AES-256-GCM, 7-sekcyjnym wywiadem SOAP oraz pełną zgodnością RODO jako ADO.",
+    "Natywna aplikacja desktopowa dla fizjoterapeutów z lokalnym szyfrowaniem bazy danych AES-256, 7-sekcyjnym wywiadem SOAP i lokalną architekturą Zero-Cloud.",
+  openGraph: {
+    title: "PhysioNotes V2.0 | Dokumentacja SOAP dla Fizjoterapeutów",
+    description: "Natywna aplikacja desktopowa dla fizjoterapeutów z lokalnym szyfrowaniem bazy danych AES-256, wywiadem SOAP i architekturą Zero-Cloud.",
+    url: "https://jakubdyrszka.dev/physionotes",
+    siteName: "PhysioNotes V2.0",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
+    locale: "pl_PL",
+    type: "website",
+  }
 };
 
 export default function PhysioNotesPage() {
@@ -46,12 +56,25 @@ export default function PhysioNotesPage() {
               ← Portfolio
             </Link>
             
-            <Link 
-              href="/login" 
-              className="text-xs sm:text-sm text-[#111111] dark:text-white font-semibold hover:opacity-70 transition-opacity"
-            >
-              Zaloguj się
-            </Link>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="text-xs sm:text-sm text-[#111111] dark:text-white font-semibold hover:opacity-70 transition-opacity">
+                  Zaloguj / Zarejestruj się
+                </button>
+              </SignInButton>
+            </SignedOut>
+
+            <SignedIn>
+              <UserButton afterSignOutUrl="/physionotes">
+                <UserButton.MenuItems>
+                  <UserButton.Link
+                    label="Zarządzaj płatnościami"
+                    labelIcon={<CreditCard className="w-4 h-4" />}
+                    href="/physionotes/billing"
+                  />
+                </UserButton.MenuItems>
+              </UserButton>
+            </SignedIn>
 
             <a
               href="#pricing"
@@ -108,7 +131,7 @@ export default function PhysioNotesPage() {
                 href="#pricing"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-medium text-base shadow-[0_4px_25px_rgba(16,185,129,0.3)] hover:scale-[1.02] transition-all duration-200"
               >
-                <span>Sprawdź pakiety</span>
+                <span>Kup dostęp</span>
                 <ArrowRight className="h-5 w-5" />
               </a>
               <Link
@@ -128,26 +151,41 @@ export default function PhysioNotesPage() {
 
       {/* 8. Footer (Linear / Vercel style) */}
       <footer className="py-16 border-t border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#111111] text-neutral-500 dark:text-neutral-400 text-xs sm:text-sm font-medium">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-emerald-500" />
-            <span>© {new Date().getFullYear()} PhysioNotes V2.0 • Nowoczesne narzędzie EDM dla fizjoterapeutów.</span>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div className="flex items-center gap-3">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              <span>© {new Date().getFullYear()} PhysioNotes V2.0 • Narzędzie dokumentacji wizyt dla fizjoterapeutów.</span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-6">
+              <Link href="/pl" className="hover:text-[#111111] dark:hover:text-white transition">Strona główna</Link>
+              <Link href="/pl/projects" className="hover:text-[#111111] dark:hover:text-white transition">Wszystkie projekty</Link>
+              <Link href="/pl/privacy" className="hover:text-[#111111] dark:hover:text-white transition">Polityka prywatności i Cookies</Link>
+              <Link href="/pl/terms" className="hover:text-[#111111] dark:hover:text-white transition">Regulamin i Zwroty</Link>
+              <a 
+                href="https://github.com/jakubdyrszka-pixel/PhysioNotes" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="inline-flex items-center gap-1 hover:text-[#111111] dark:hover:text-white transition"
+              >
+                <span>GitHub Repository</span>
+                <ArrowRight className="h-3.5 w-3.5 -rotate-45" />
+              </a>
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            <Link href="/pl" className="hover:text-[#111111] dark:hover:text-white transition">Strona główna</Link>
-            <Link href="/pl/projects" className="hover:text-[#111111] dark:hover:text-white transition">Wszystkie projekty</Link>
-            <Link href="/pl/privacy" className="hover:text-[#111111] dark:hover:text-white transition">Polityka prywatności / Cookies</Link>
-            <Link href="/pl/terms" className="hover:text-[#111111] dark:hover:text-white transition">Regulamin</Link>
-            <a 
-              href="https://github.com/jakubdyrszka-pixel/PhysioNotes" 
-              target="_blank" 
-              rel="noreferrer" 
-              className="inline-flex items-center gap-1 hover:text-[#111111] dark:hover:text-white transition"
-            >
-              <span>GitHub Repository</span>
-              <ArrowRight className="h-3.5 w-3.5 -rotate-45" />
-            </a>
+          <div className="pt-6 border-t border-neutral-100 dark:border-neutral-800/60 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-neutral-500 dark:text-neutral-400">
+            <p>
+              Sprzedawca i dostawca oprogramowania: <strong>Jakub Dyrszka</strong>, ul. Szuwarków 24, 43-100 Tychy, Polska. Kontakt:{" "}
+              <a href="mailto:contact@jakubdyrszka.dev" className="underline hover:text-emerald-500 transition">
+                contact@jakubdyrszka.dev
+              </a>{" "}
+              | tel. +48 504 345 289
+            </p>
+            <p className="shrink-0">
+              Płatności obsługiwane przez <strong>HotPay</strong>.
+            </p>
           </div>
         </div>
       </footer>

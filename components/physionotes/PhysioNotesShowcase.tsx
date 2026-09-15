@@ -34,7 +34,7 @@ const mainFeature: ShowcaseFeature = {
     "Wbudowana biblioteka 500+ szablonów jednostek chorobowych ze słownikowym wyszukiwaniem i natychmiastowym wstrzykiwaniem.",
     "Automatyczna walidacja i podpowiedzi oficjalnej klasyfikacji ICD-10 (np. M75.1, M54.5, M51.1) wraz z terminologią ortopedyczną.",
     "Błyskawiczne formatowanie tekstu medycznego (Rich-Text) za pomocą skrótów klawiszowych, bez odrywania dłoni od klawiatury.",
-    "Generowanie 3 wyspecjalizowanych wariantów PDF: kompletna dokumentacja EDM, zalecenia dla pacjenta lub syntetyczny raport."
+    "Generowanie 3 wyspecjalizowanych wariantów PDF: kompletna dokumentacja wizyty, zalecenia dla pacjenta lub syntetyczny raport."
   ],
   clinicalHighlight: "Zastosowanie predefiniowanych szablonów klinicznych redukuje czas sporządzania pełnej dokumentacji wizyty z 10 minut do niespełna 60 sekund."
 };
@@ -64,11 +64,11 @@ const secondaryFeatures: ShowcaseFeature[] = [
     src: "/images/physionotes/Screenshot%202026-07-01%20at%2013.10.16.png",
     points: [
       "Lokalne szyfrowanie bazy danych standardem AES-256-GCM kluczem wywodzącym się z Twojego prywatnego kodu PIN.",
-      "Integracja z systemowym pętem kluczy: Apple Keychain (macOS) oraz Windows Credential Locker.",
+      "Bezpieczne wyprowadzanie klucza szyfrującego funkcją scrypt bezpośrednio z Twojego prywatnego kodu PIN.",
       "Paradygmat Zero-Knowledge – twórcy oprogramowania nie posiadają dostępu do haseł ani dokumentacji pacjentów.",
       "Automatyczna blokada interfejsu chroni wrażliwe dane zdrowotne w otwartej przestrzeni gabinetu fizjoterapeutycznego."
     ],
-    clinicalHighlight: "Gwarancja pełnej prywatności i kontroli nad danymi medycznymi oraz zwolnienie z procedur i umów powierzenia RODO (DPA)."
+    clinicalHighlight: "W standardowym modelu działania dane pacjentów są przechowywane lokalnie na Twoim urządzeniu i nie trafiają do chmury PhysioNotes."
   },
   {
     id: "themes-backup",
@@ -145,9 +145,11 @@ export function PhysioNotesShowcase() {
             
             {/* Left / Top: Huge Interactive Screenshot */}
             <div className="lg:col-span-7 relative group">
-              <div 
+              <button 
+                type="button"
                 onClick={() => setZoomedImage(mainFeature.src)}
-                className="relative aspect-[16/10] w-full rounded-xl sm:rounded-2xl overflow-hidden border border-neutral-200/80 dark:border-neutral-800 bg-neutral-950 cursor-zoom-in shadow-md transition-transform duration-500 group-hover:scale-[1.01]"
+                aria-label={`Powiększ zrzut ekranu: ${mainFeature.title}`}
+                className="relative block aspect-[16/10] w-full rounded-xl sm:rounded-2xl overflow-hidden border border-neutral-200/80 dark:border-neutral-800 bg-neutral-950 cursor-zoom-in shadow-md transition-transform duration-500 group-hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
               >
                 <Image
                   src={mainFeature.src}
@@ -160,7 +162,7 @@ export function PhysioNotesShowcase() {
                   <Maximize2 className="h-3.5 w-3.5 text-emerald-400" />
                   <span>Powiększ zrzut</span>
                 </div>
-              </div>
+              </button>
               <div className="mt-3.5 flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400 px-1">
                 <span>Rzeczywisty interfejs 7-sekcyjnego edytora medycznego</span>
                 <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{mainFeature.badge}</span>
@@ -243,9 +245,11 @@ export function PhysioNotesShowcase() {
             
             {/* Left: Interactive Screenshot */}
             <div className="lg:col-span-7 relative group">
-              <div 
+              <button 
+                type="button"
                 onClick={() => setZoomedImage(activeSecondary.src)}
-                className="relative aspect-[16/10] w-full rounded-xl sm:rounded-2xl overflow-hidden border border-neutral-200/80 dark:border-neutral-800 bg-neutral-950 cursor-zoom-in shadow-md transition-transform duration-500 group-hover:scale-[1.01]"
+                aria-label={`Powiększ zrzut ekranu: ${activeSecondary.title}`}
+                className="relative block aspect-[16/10] w-full rounded-xl sm:rounded-2xl overflow-hidden border border-neutral-200/80 dark:border-neutral-800 bg-neutral-950 cursor-zoom-in shadow-md transition-transform duration-500 group-hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
               >
                 <Image
                   src={activeSecondary.src}
@@ -258,7 +262,7 @@ export function PhysioNotesShowcase() {
                   <Maximize2 className="h-3.5 w-3.5 text-emerald-400" />
                   <span>Powiększ zrzut</span>
                 </div>
-              </div>
+              </button>
               <div className="mt-3.5 flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400 px-1">
                 <span>Widok aplikacji desktopowej • {activeSecondary.badge}</span>
                 <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Moduł {activeSecondaryIndex + 2} z 4</span>

@@ -234,9 +234,18 @@ export default async function HomePage({
         title={t.contact.title}
       >
         <div className="grid gap-8 lg:grid-cols-[1fr_auto]">
-          <p className="max-w-lg text-xl leading-relaxed text-muted">
-            {t.contact.subtitle}
-          </p>
+          <div className="flex flex-col gap-4">
+            <p className="max-w-lg text-xl leading-relaxed text-muted">
+              {t.contact.subtitle}
+            </p>
+            <div className="flex items-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-500">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              {locale === "pl" ? "Zazwyczaj odpowiadam w ciągu 24h" : "I typically respond within 24h"}
+            </div>
+          </div>
           <div className="flex flex-wrap items-start gap-3">
             <Button href="mailto:jakub.dyrszka@gmail.com" external>
               <Mail size={14} aria-hidden="true" />

@@ -51,7 +51,7 @@ const faqItems: FAQItem[] = [
     icon: Shield,
     question: "Czy korzystanie z programu wymaga podpisywania umowy powierzenia danych?",
     answer:
-      "PhysioNotes nie jest usługą chmurową (SaaS) i nie przetwarza danych medycznych na swoich serwerach – wszystko zostaje na Twoim komputerze. Dzięki temu odpada konieczność podpisywania typowych dla chmury umów powierzenia przetwarzania danych osobowych. Znacznie upraszcza to kwestie prawne w Twoim gabinecie."
+      "W standardowym modelu działania dane pacjentów są przechowywane wyłącznie lokalnie na urządzeniu użytkownika i nie są przekazywane do infrastruktury PhysioNotes ani na zewnętrzne serwery. Oprogramowanie działa w architekturze lokalnej (on-premise), co oznacza, że administrator danych (gabinet) zachowuje bezpośrednią kontrolę techniczną nad bazą danych."
   }
 ];
 
@@ -88,7 +88,7 @@ export function PhysioNotesFAQ() {
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full text-left p-6 sm:p-8 flex items-center justify-between gap-6 focus:outline-none"
+                  className="w-full text-left p-6 sm:p-8 flex items-center justify-between gap-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-2xl"
                 >
                   <div className="flex items-start sm:items-center gap-4">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mt-0.5 sm:mt-0">

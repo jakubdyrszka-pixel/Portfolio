@@ -75,7 +75,7 @@ export function PhysioNotesWorkflow() {
             href="#pricing"
             className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm hover:opacity-80 transition-opacity"
           >
-            <span>Porównaj plany i wypróbuj</span>
+            <span>Wybierz dostęp i wypróbuj</span>
             <ArrowRight className="h-4 w-4" />
           </a>
         </div>

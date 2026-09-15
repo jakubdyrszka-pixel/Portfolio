@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useUser } from '@clerk/nextjs';
 import Link from 'next/link';
-import { Check, Copy, Loader2, AlertTriangle, Monitor, Download } from 'lucide-react';
+import { Check, Copy, Loader2, AlertTriangle, Monitor, Download, X, ShieldCheck, ArrowRight } from 'lucide-react';
 
 type ActivationState = 'loading' | 'activating' | 'success' | 'expired' | 'error';
 
@@ -21,53 +21,82 @@ interface UserData {
   name: string | null;
 }
 
+interface PricingPlan {
+  name: string;
+  description: string;
+  price: string;
+  amount: string;
+  period: string;
+  durationLabel: string;
+  priceId: string;
+  features: string[];
+  recommended: boolean;
+}
+
 function PricingTable({ userData, activateDesktop }: { userData: UserData | null, activateDesktop: () => void }) {
   const [isYearly, setIsYearly] = useState(false);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [serviceRequestAccepted, setServiceRequestAccepted] = useState(false);
 
-  const plans = [
+  const plans: PricingPlan[] = [
     {
       name: 'Starter',
-      description: 'Idealny dla małych gabinetów i freelancerów.',
+      description: 'Idealny dla małych gabinetów i indywidualnych praktyk.',
       price: isYearly ? '490 zł' : '49 zł',
-      period: isYearly ? '/ rocznie' : '/ mc',
+      amount: isYearly ? '490.00' : '49.00',
+      period: isYearly ? '/ 365 dni' : '/ 30 dni',
+      durationLabel: isYearly ? '1 rok (365 dni dostępu)' : '1 miesiąc (30 dni dostępu)',
       priceId: isYearly ? 'pri_01m1xpv6seqh7pgrfn7fnzwxd8' : 'pri_01m1xpt3fz6xydh9jgg9wyk3q8',
-      features: ['Do 5 pacjentów / tydzień', 'Pełen wywiad SOAP', 'Szyfrowanie AES-256', 'Eksport do PDF'],
+      features: ['Do 20 pacjentów tygodniowo', 'Wizyty bez limitu', 'Pełen wywiad SOAP & offline', 'Eksport do PDF'],
       recommended: false,
     },
     {
       name: 'Pro',
       description: 'Pełen potencjał dla prężnie działających specjalistów.',
-      price: isYearly ? '790 zł' : '79 zł',
-      period: isYearly ? '/ rocznie' : '/ mc',
+      price: isYearly ? '890 zł' : '89 zł',
+      amount: isYearly ? '890.00' : '89.00',
+      period: isYearly ? '/ 365 dni' : '/ 30 dni',
+      durationLabel: isYearly ? '1 rok (365 dni dostępu)' : '1 miesiąc (30 dni dostępu)',
       priceId: isYearly ? 'pri_01m1xpxgr7hb51sj2g4yamkdgz' : 'pri_01m1xpwrk0p57ff3cetavx334w',
-      features: ['Bez limitu pacjentów', 'Baza wiedzy ICD-10', 'Synchronizacja wielu urządzeń', 'Priorytetowe wsparcie'],
+      features: ['Bez limitu pacjentów', 'Wizyty bez limitu', 'Baza wiedzy ICD-10 i szablony', 'Automatyczne kopie zapasowe'],
       recommended: true,
     },
     {
       name: 'Klinika',
       description: 'Dla większych placówek z zespołem fizjoterapeutów.',
       price: 'Indywidualna',
+      amount: '0',
       period: '',
+      durationLabel: 'Ustalana indywidualnie',
       priceId: 'contact',
-      features: ['Wiele kont dla personelu', 'Współdzielona baza pacjentów', 'Zaawansowane statystyki', 'Dedykowany opiekun'],
+      features: ['Wiele stanowisk personelu', 'Ustandaryzowana dokumentacja', 'Zaawansowane statystyki', 'Dedykowany opiekun i wdrożenie'],
       recommended: false,
     }
   ];
 
-  const handleCheckout = async (priceId: string) => {
-    if (priceId === 'contact') {
-      window.location.href = 'mailto:kontakt@physionotes.com?subject=Zapytanie o plan Klinika';
+  const handleSelectPlan = (plan: PricingPlan) => {
+    if (plan.priceId === 'contact') {
+      window.location.href = 'mailto:contact@jakubdyrszka.dev?subject=Zapytanie o plan Klinika';
       return;
     }
     
+    setSelectedPlan(plan);
+    setTermsAccepted(false);
+    setServiceRequestAccepted(false);
+  };
+
+  const handleFinalCheckout = async () => {
+    if (!selectedPlan || !termsAccepted || !serviceRequestAccepted) return;
+
     setIsCheckingOut(true);
     try {
       const response = await fetch('/api/hotpay/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          priceId,
+          priceId: selectedPlan.priceId,
           email: userData?.email || '',
           userId: userData?.id || ''
         })
@@ -79,9 +108,11 @@ function PricingTable({ userData, activateDesktop }: { userData: UserData | null
         window.location.href = data.redirectUrl;
       } else {
         console.error('Missing redirectUrl from HotPay checkout API');
+        alert('Nie udało się utworzyć sesji płatności. Spróbuj ponownie.');
       }
     } catch (error) {
       console.error('HotPay checkout error:', error);
+      alert('Wystąpił błąd podczas połączenia z bramką płatniczą.');
     } finally {
       setIsCheckingOut(false);
     }
@@ -91,19 +122,21 @@ function PricingTable({ userData, activateDesktop }: { userData: UserData | null
     <div className="min-h-screen bg-[#fafafa] dark:bg-[#111111] py-20 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-[#111111] dark:text-white">Odblokuj PhysioNotes</h1>
-          <p className="mt-3 text-neutral-600 dark:text-neutral-400">Twój okres próbny dobiegł końca. Wybierz pakiet, aby kontynuować.</p>
+          <h1 className="text-3xl font-bold text-[#111111] dark:text-white">Wybierz pakiet dostępu PhysioNotes</h1>
+          <p className="mt-3 text-neutral-600 dark:text-neutral-400">Płatność jednorazowa za wybrany okres. Dostęp nie odnawia się automatycznie.</p>
           
           <div className="mt-8 flex items-center justify-center gap-3">
-            <span className={`text-sm font-medium ${!isYearly ? 'text-[#111111] dark:text-white' : 'text-neutral-500'}`}>Miesięcznie</span>
+            <span className={`text-sm font-medium ${!isYearly ? 'text-[#111111] dark:text-white' : 'text-neutral-600 dark:text-neutral-400'}`}>30 dni (Miesięcznie)</span>
             <button 
+              type="button"
+              aria-label={isYearly ? 'Przełącz na rozliczenie 30-dniowe' : 'Przełącz na rozliczenie roczne'}
               onClick={() => setIsYearly(!isYearly)}
-              className="relative inline-flex h-6 w-11 items-center rounded-full bg-neutral-200 dark:bg-neutral-800 transition-colors focus:outline-none"
+              className="relative inline-flex h-6 w-11 items-center rounded-full bg-neutral-200 dark:bg-neutral-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
             >
               <span className={`inline-block h-4 w-4 transform rounded-full bg-emerald-500 transition-transform ${isYearly ? 'translate-x-6' : 'translate-x-1'}`} />
             </button>
-            <span className={`text-sm font-medium flex items-center gap-1.5 ${isYearly ? 'text-[#111111] dark:text-white' : 'text-neutral-500'}`}>
-              Rocznie <span className="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 text-[10px] uppercase font-bold tracking-wider">Zniżka</span>
+            <span className={`text-sm font-medium flex items-center gap-1.5 ${isYearly ? 'text-[#111111] dark:text-white' : 'text-neutral-600 dark:text-neutral-400'}`}>
+              365 dni (Rocznie) <span className="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 text-[10px] uppercase font-bold tracking-wider">Zniżka</span>
             </span>
           </div>
         </div>
@@ -118,7 +151,7 @@ function PricingTable({ userData, activateDesktop }: { userData: UserData | null
               )}
               
               <h3 className="text-xl font-bold text-[#111111] dark:text-white">{plan.name}</h3>
-              <p className="mt-2 text-sm text-neutral-500 min-h-[40px]">{plan.description}</p>
+              <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 min-h-[40px]">{plan.description}</p>
               
               <div className="mt-6 flex items-baseline gap-1">
                 {plan.price === 'Indywidualna' ? (
@@ -126,37 +159,142 @@ function PricingTable({ userData, activateDesktop }: { userData: UserData | null
                 ) : (
                   <>
                     <span className="text-4xl font-bold tracking-tight text-[#111111] dark:text-white">{plan.price}</span>
-                    <span className="text-sm font-medium text-neutral-500">{plan.period}</span>
+                    <span className="text-sm font-medium text-neutral-600 dark:text-neutral-400">{plan.period}</span>
                   </>
                 )}
               </div>
               
               <ul className="mt-8 space-y-4 mb-8 flex-grow">
                 {plan.features.map(feat => (
-                  <li key={feat} className="flex items-start gap-3 text-sm text-neutral-600 dark:text-neutral-400">
-                    <Check className="h-5 w-5 shrink-0 text-emerald-500" />
+                  <li key={feat} className="flex items-start gap-3 text-sm text-neutral-700 dark:text-neutral-300">
+                    <Check className="h-5 w-5 shrink-0 text-emerald-500" aria-hidden="true" />
                     <span>{feat}</span>
                   </li>
                 ))}
               </ul>
               
               <button
-                onClick={() => handleCheckout(plan.priceId)}
-                disabled={isCheckingOut && plan.priceId !== 'contact'}
-                className={`w-full py-3.5 px-4 rounded-xl text-sm font-semibold transition-all mt-auto ${plan.recommended ? 'bg-emerald-500 hover:bg-emerald-400 text-white shadow-lg shadow-emerald-500/25' : 'bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-[#111111] dark:text-white'}`}
+                type="button"
+                onClick={() => handleSelectPlan(plan)}
+                className={`w-full py-3.5 px-4 rounded-xl text-sm font-semibold transition-all mt-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${plan.recommended ? 'bg-emerald-500 hover:bg-emerald-400 text-white shadow-lg shadow-emerald-500/25' : 'bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-[#111111] dark:text-white'}`}
               >
-                {isCheckingOut && plan.priceId !== 'contact' ? 'Otwieranie bramki...' : (plan.priceId === 'contact' ? 'Skontaktuj się' : `Wybierz ${plan.name}`)}
+                {plan.priceId === 'contact' ? 'Skontaktuj się' : `Wybierz ${plan.name}`}
               </button>
             </div>
           ))}
         </div>
         
         <div className="mt-12 text-center">
-          <button onClick={activateDesktop} className="text-xs text-neutral-500 hover:text-[#111111] dark:hover:text-white transition underline underline-offset-4">
+          <button onClick={activateDesktop} className="text-xs text-neutral-500 dark:text-neutral-400 hover:text-[#111111] dark:hover:text-white transition underline underline-offset-4">
             Już opłaciłeś? Odśwież status licencji
           </button>
         </div>
       </div>
+
+      {/* ── Compliant Order Confirmation Modal ── */}
+      {selectedPlan && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto animate-in fade-in duration-200">
+          <div className="relative w-full max-w-lg bg-white dark:bg-[#161616] rounded-3xl border border-neutral-200 dark:border-neutral-800 shadow-2xl p-6 sm:p-8 text-[#111111] dark:text-white my-8">
+            <button
+              type="button"
+              onClick={() => setSelectedPlan(null)}
+              aria-label="Zamknij podsumowanie"
+              className="absolute top-6 right-6 p-2 rounded-full text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                <ShieldCheck className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold">Podsumowanie zamówienia</h3>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">Bezpieczna płatność przez operatora HotPay</p>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 mb-6 space-y-2">
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-neutral-600 dark:text-neutral-400">Wybrany pakiet:</span>
+                <span className="font-bold text-[#111111] dark:text-white">PhysioNotes {selectedPlan.name}</span>
+              </div>
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-neutral-600 dark:text-neutral-400">Czas dostępu:</span>
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400">{selectedPlan.durationLabel}</span>
+              </div>
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-neutral-600 dark:text-neutral-400">Typ płatności:</span>
+                <span className="font-medium text-neutral-700 dark:text-neutral-300">Jednorazowa (brak auto-odnowienia)</span>
+              </div>
+              <div className="pt-2 border-t border-neutral-200 dark:border-neutral-800 flex justify-between items-center text-base">
+                <span className="font-semibold">Do zapłaty:</span>
+                <span className="text-2xl font-black text-[#111111] dark:text-white">{selectedPlan.price} brutto</span>
+              </div>
+            </div>
+
+            <div className="mb-6 flex flex-col items-center justify-center gap-2">
+              <img src="/hotpay/logo.png" alt="Obsługa płatności przez HotPay" className="h-8 object-contain dark:invert" />
+              <img src="/hotpay/banki.png" alt="Obsługiwane banki" className="h-6 object-contain" />
+            </div>
+
+            <div className="space-y-4 text-xs text-neutral-600 dark:text-neutral-400 mb-6">
+              <label className="flex items-start gap-3 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-neutral-300 dark:border-neutral-700 text-emerald-600 focus:ring-emerald-500 shrink-0"
+                />
+                <span>
+                  Oświadczam, że zapoznałem/am się z{' '}
+                  <Link href="/pl/terms" target="_blank" className="text-emerald-600 dark:text-emerald-400 underline font-medium hover:opacity-80">
+                    Regulaminem sprzedaży i usług
+                  </Link>{' '}
+                  oraz{' '}
+                  <Link href="/pl/privacy" target="_blank" className="text-emerald-600 dark:text-emerald-400 underline font-medium hover:opacity-80">
+                    Polityką Prywatności
+                  </Link>{' '}
+                  i akceptuję ich treść. <strong className="text-red-500">*</strong>
+                </span>
+              </label>
+
+              <label className="flex items-start gap-3 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={serviceRequestAccepted}
+                  onChange={(e) => setServiceRequestAccepted(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-neutral-300 dark:border-neutral-700 text-emerald-600 focus:ring-emerald-500 shrink-0"
+                />
+                <span>
+                  Zapoznałem/am się z prawem do odstąpienia od umowy. <strong className="text-red-500">*</strong>
+                </span>
+              </label>
+            </div>
+
+            <div className="space-y-3">
+              <button
+                type="button"
+                onClick={handleFinalCheckout}
+                disabled={!termsAccepted || !serviceRequestAccepted || isCheckingOut}
+                className="w-full py-4 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:bg-neutral-300 dark:disabled:bg-neutral-800 disabled:text-neutral-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-emerald-500/25 transition-all flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+              >
+                <span>{isCheckingOut ? 'Otwieranie bramki HotPay...' : 'Kupuję i płacę (HotPay)'}</span>
+                <ArrowRight className="h-4 w-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSelectedPlan(null)}
+                disabled={isCheckingOut}
+                className="w-full py-2.5 text-xs text-neutral-500 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition text-center"
+              >
+                Anuluj i wróć
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

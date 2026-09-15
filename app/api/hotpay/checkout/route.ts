@@ -16,11 +16,11 @@ export async function POST(request: Request) {
       amount = "490.00";
       name = "PhysioNotes Starter (1 rok)";
     } else if (priceId === 'pri_01m1xpwrk0p57ff3cetavx334w') {
-      amount = "79.00";
-      name = "PhysioNotes Pro (1 miesiąc)";
+      amount = "89.00";
+      name = "PhysioNotes miesięczna licencja PROFESSIONAL";
     } else if (priceId === 'pri_01m1xpxgr7hb51sj2g4yamkdgz') {
-      amount = "790.00";
-      name = "PhysioNotes Pro (1 rok)";
+      amount = "890.00";
+      name = "PhysioNotes roczna licencja PROFESSIONAL";
     }
     
     const secret = process.env.HOTPAY_SECRET || "";
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     const orderId = `${userId}|${priceId}|${Date.now()}`;
     const protocol = request.headers.get('x-forwarded-proto') || 'http';
     const host = request.headers.get('host') || 'localhost:3000';
-    const returnUrl = `${protocol}://${host}/physionotes/activate`;
+    const returnUrl = `${protocol}://${host}/api/hotpay/return`;
     
     const hashString = `${password};${amount};${name};${returnUrl};${orderId};${secret}`;
     const hash = crypto.createHash('sha256').update(hashString).digest('hex');
