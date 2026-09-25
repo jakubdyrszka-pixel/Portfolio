@@ -22,8 +22,18 @@ export async function getUserProfile(request: Request) {
       );
     }
 
-    const user = await prisma.user.findUnique({
-      where: { id: payload.userId },
+    const userId = payload.userId || (payload as any).id || (payload as any).sub;
+    const userEmail = payload.email;
+
+    if (!userId && !userEmail) {
+      return NextResponse.json(
+        { error: 'Unauthorized: Invalid token payload' },
+        { status: 401 }
+      );
+    }
+
+    const user = await prisma.user.findFirst({
+      where: userId ? { id: userId } : { email: userEmail },
       include: {
         licenses: {
           orderBy: { expiresAt: 'desc' },
@@ -99,7 +109,8 @@ export async function deleteUserProfile(request: Request) {
       return NextResponse.json({ error: 'Unauthorized: Invalid token' }, { status: 401 });
     }
 
-    const user = await prisma.user.findUnique({ where: { id: payload.userId } });
+    const userId = payload.userId || (payload as any).id || (payload as any).sub;
+    const user = await prisma.user.findFirst({ where: userId ? { id: userId } : { email: payload.email } });
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
